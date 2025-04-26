@@ -11,7 +11,6 @@ Antes de comenzar con el backend, asegúrate de tener instalado lo siguiente en 
 
 - Python 3.x
 - pip: Puedes ver tu version con 'pip --version'.
-- virtualenv: Puedes instalarlo con 'pip install virtualenv' si no lo tienes.
 
 ## Pasos para Ejecutar el Backend (Django)
 
@@ -19,7 +18,7 @@ Antes de comenzar con el backend, asegúrate de tener instalado lo siguiente en 
     cd Backend
 
 2.  **Crear el Entorno Virtual:**
-    virtualenv venv
+   python -m venv venv
 
 3.  **Activar el Entorno Virtual:**
     # En Windows:
@@ -31,9 +30,9 @@ Antes de comenzar con el backend, asegúrate de tener instalado lo siguiente en 
     Una vez activado el entorno virtual, instala las bibliotecas necesarias desde el archivo `requirements.txt`:
         pip install -r requirements.txt
 
-5.  **Realizar las Migraciones:**
+5.  **Realizar las Migraciones:** (//aún no realizar migraciones)
     Aplica las migraciones de Django para crear las tablas de la base de datos:
-        python manage.py migrate
+        python manage.py migrate 
 
 6.  **Ejecutar el Servidor de Desarrollo:**
     Inicia el servidor de desarrollo de Django:
