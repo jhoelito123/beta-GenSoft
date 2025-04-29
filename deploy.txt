@@ -1,0 +1,144 @@
+# Instrucciones de Ejecución - StartPy
+
+## Frontend (React + Vite)
+
+### Requisitos Previos
+- Node.js (versión 16 o superior)
+- npm o yarn
+
+### Pasos de Instalación y Ejecución
+
+1. **Navegar al Directorio Frontend**
+   ```bash
+   cd Frontend
+   ```
+
+2. **Instalar Dependencias**
+   ```bash
+   npm install
+   # o
+   yarn install
+   ```
+
+3. **Configurar Variables de Entorno**
+   - Crear archivo `.env` en la raíz del proyecto Frontend
+   - Configurar variables necesarias:
+     ```
+     VITE_API_URL=http://localhost:8000
+     VITE_APP_NAME=StartPy
+     ```
+
+4. **Ejecutar en Modo Desarrollo**
+   ```bash
+   npm run dev
+   # o
+   yarn dev
+   ```
+   - La aplicación estará disponible en: `http://localhost:5173`
+
+5. **Comandos Adicionales**
+   ```bash
+   # Formatear código
+   npm run format
+   
+   # Verificar calidad de código
+   npm run lint
+   
+   # Ejecutar tests
+   npm run test
+   
+   # Construir para producción
+   npm run build
+   ```
+
+## Backend (Django)
+
+### Requisitos Previos
+- Python 3.x
+- pip
+- Virtualenv (recomendado)
+
+### Pasos de Instalación y Ejecución
+
+1. **Navegar al Directorio Backend**
+   ```bash
+   cd Backend
+   ```
+
+2. **Crear y Activar Entorno Virtual**
+   ```bash
+   # Windows
+   python -m venv venv
+   venv\Scripts\activate
+
+   # Linux/Mac
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+
+3. **Instalar Dependencias**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Configurar Variables de Entorno**
+   - Crear archivo `.env` en la raíz del proyecto Backend
+   - Configurar variables necesarias:
+     ```
+     DEBUG=True
+     SECRET_KEY=tu_clave_secreta
+     DATABASE_URL=sqlite:///db.sqlite3
+     ALLOWED_HOSTS=localhost,127.0.0.1
+     ```
+
+5. **Aplicar Migraciones**
+   ```bash
+   python manage.py migrate
+   ```
+
+6. **Crear Superusuario (Opcional)**
+   ```bash
+   python manage.py createsuperuser
+   ```
+
+7. **Ejecutar Servidor de Desarrollo**
+   ```bash
+   python manage.py runserver
+   ```
+   - La API estará disponible en: `http://localhost:8000`
+   - El panel de administración en: `http://localhost:8000/admin`
+
+8. **Comandos Adicionales**
+   ```bash
+   # Crear migraciones
+   python manage.py makemigrations
+   
+   # Ejecutar tests
+   python manage.py test
+   
+   # Verificar seguridad
+   python manage.py check --deploy
+   ```
+
+## Ejecución Simultánea
+
+Para ejecutar ambos servicios simultáneamente:
+
+1. **Terminal 1 (Backend)**
+   ```bash
+   cd Backend
+   venv\Scripts\activate  # Windows
+   python manage.py runserver
+   ```
+
+2. **Terminal 2 (Frontend)**
+   ```bash
+   cd Frontend
+   npm run dev
+   ```
+
+## Notas Importantes
+
+- Asegúrate de que el puerto 5173 (Frontend) y 8000 (Backend) estén disponibles
+- En desarrollo, CORS está configurado para permitir comunicación entre servicios
+- Para producción, ajusta las configuraciones de seguridad y CORS según sea necesario
