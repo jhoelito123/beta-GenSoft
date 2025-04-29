@@ -193,3 +193,34 @@ Backend/
    - Ejecutar tests automáticamente
    - Verificar calidad de código
    - Desplegar en ambientes de prueba 
+
+## Conventional Commits
+Para más información sobre Conventional Commits, visitar:
+https://www.conventionalcommits.org/en/v1.0.0/
+
+Los commits deben seguir la siguiente estructura:
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer(s)]
+
+Tipos de commits:
+- feat: Nueva característica
+- fix: Corrección de errores
+- docs: Cambios en documentación
+- style: Cambios que no afectan el código (espacios, formato, etc)
+- refactor: Refactorización del código
+- perf: Mejoras de rendimiento
+- test: Agregar o modificar pruebas
+- build: Cambios que afectan el sistema de build
+- ci: Cambios en configuración de CI
+- chore: Otros cambios que no modifican src o test
+- revert: Revierte un commit anterior
+
+Ejemplos:
+feat: agregar página de login
+fix: corregir validación de formulario
+docs: actualizar README
+style: formatear código con prettier
+refactor: simplificar lógica de autenticación
