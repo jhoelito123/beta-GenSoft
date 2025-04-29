@@ -7,7 +7,7 @@ Sistema construido en el Frontend con React+Vite (JS) y el Backend con Django (P
 - /Frontend: Carpeta que contiene el frontend hecho en React+Vite
 - /Backend: Carpeta que contiene el backend hecho en Django
 
-## Prerrequisitos (Backend - Django)
+## Pre requisitos (Backend - Django)
 
 Antes de comenzar con el backend, asegúrate de tener instalado lo siguiente en tu sistema:
 
