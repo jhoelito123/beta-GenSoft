@@ -1,0 +1,195 @@
+# Estándares de Desarrollo - StartPy
+
+## Frontend (React + Vite + TS)
+
+### Estructura de Carpetas (Feature-First Architecture)
+```
+src/
+├── components/         # Componentes reutilizables
+│   ├── ui/            # Componentes de UI básicos (buttons, inputs, cards)
+│   │   ├── Button.tsx
+│   │   ├── Input.tsx
+│   │   └── Card.tsx
+│   └── layout/        # Componentes de layout (header, footer, sidebar)
+│       ├── Header.tsx
+│       ├── Footer.tsx
+│       └── Sidebar.tsx
+├── features/          # Características específicas (organizadas por dominio)
+│   ├── auth/          # Autenticación
+│   │   ├── components/    # Componentes específicos de auth
+│   │   ├── hooks/        # Hooks específicos de auth
+│   │   └── services/     # Servicios de auth
+│   ├── dashboard/     # Panel de control
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   └── services/
+│   └── users/         # Gestión de usuarios
+│       ├── components/
+│       ├── hooks/
+│       └── services/
+├── hooks/             # Custom hooks globales
+│   ├── useAuth.ts
+│   └── useTheme.ts
+├── services/          # Servicios y llamadas API
+│   ├── api.ts         # Configuración de axios
+│   └── auth.ts        # Servicios de autenticación
+├── utils/             # Utilidades y helpers
+│   ├── formatters.ts
+│   └── validators.ts
+├── types/             # Tipos TypeScript
+│   ├── user.ts
+│   └── api.ts
+└── assets/            # Recursos estáticos
+    ├── images/
+    └── styles/
+```
+
+### Convenciones de Nombrado
+
+1. **Archivos y Carpetas**
+   - Usar kebab-case: `user-profile.tsx`, `auth-service.ts`
+   - Ejemplos: `table-item.tsx`, `data-form.tsx`
+
+2. **Componentes React**
+   - Usar PascalCase: `UserProfile`, `DataTable`
+   - Ejemplos: `TableItem`, `FormInput`
+
+3. **Variables y Funciones**
+   - Usar camelCase: `getUserData`, `handleSubmit`
+   - Ejemplos: `userData`, `onClickHandler`
+
+4. **Constantes**
+   - Usar UPPER_SNAKE_CASE: `MAX_ITEMS`, `API_URL`
+
+5. **Interfaces y Tipos**
+   - Usar PascalCase con prefijo 'I' o 'T': `IUser`, `TFormData`
+
+### Estándares de Código
+
+1. **Componentes**
+   - Usar componentes funcionales con hooks
+   - Separar lógica de presentación
+   - Usar TypeScript para tipado
+
+2. **Estilos**
+   - Usar Tailwind CSS
+   - Seguir la metodología mobile-first
+   - Mantener estilos consistentes
+
+3. **Testing**
+   - Usar Jest y React Testing Library
+   - Escribir tests unitarios para componentes
+   - Implementar tests de integración
+
+## Backend (Django)
+
+### Estructura de Carpetas (Domain-Driven Design)
+```
+Backend/
+├── apps/              # Aplicaciones Django (por dominio)
+│   ├── users/         # Gestión de usuarios
+│   │   ├── models.py
+│   │   ├── views.py
+│   │   ├── serializers.py
+│   │   ├── urls.py
+│   │   └── tests/
+│   ├── products/      # Gestión de productos
+│   │   ├── models.py
+│   │   ├── views.py
+│   │   ├── serializers.py
+│   │   ├── urls.py
+│   │   └── tests/
+│   └── orders/        # Gestión de pedidos
+│       ├── models.py
+│       ├── views.py
+│       ├── serializers.py
+│       ├── urls.py
+│       └── tests/
+├── config/            # Configuración del proyecto
+│   ├── settings/
+│   │   ├── base.py
+│   │   ├── development.py
+│   │   └── production.py
+│   ├── urls.py
+│   └── wsgi.py
+├── utils/             # Utilidades compartidas
+│   ├── permissions.py
+│   └── decorators.py
+└── tests/             # Tests de integración
+    ├── conftest.py
+    └── factories.py
+```
+
+### Convenciones de Nombrado
+
+1. **Archivos y Carpetas**
+   - Usar snake_case: `user_models.py`, `product_views.py`
+
+2. **Clases**
+   - Usar PascalCase: `UserModel`, `ProductSerializer`
+
+3. **Funciones y Variables**
+   - Usar snake_case: `get_user_data`, `handle_request`
+
+4. **Constantes**
+   - Usar UPPER_SNAKE_CASE: `MAX_ITEMS`, `API_VERSION`
+
+### Estándares de Código
+
+1. **Modelos**
+   - Usar nombres descriptivos
+   - Documentar campos y relaciones
+   - Implementar métodos de clase cuando sea necesario
+
+2. **Vistas**
+   - Usar vistas basadas en clases (CBV)
+   - Implementar permisos adecuados
+   - Manejar excepciones apropiadamente
+
+3. **Serializadores**
+   - Validar datos de entrada
+   - Usar serializadores anidados cuando sea necesario
+
+4. **Testing**
+   - Usar Django Test Framework
+   - Implementar tests unitarios y de integración
+   - Cubrir casos de éxito y error
+
+## Documentación de API
+
+1. **Postman**
+   - Mantener colecciones organizadas por dominio
+   - Documentar cada endpoint con ejemplos
+   - Incluir variables de entorno para diferentes ambientes
+
+2. **Swagger/OpenAPI**
+   - Mantener documentación actualizada
+   - Incluir ejemplos de requests y responses
+   - Documentar parámetros y tipos de datos
+
+## Testing
+
+### Frontend
+- Unit Tests: Vitest
+- Integration Tests: Cypress
+
+### Backend
+- Unit Tests: Django Test Framework
+- Integration Tests: Django Test Framework
+
+## Workflow de Desarrollo
+
+1. **Git Flow**
+   - Usar ramas feature/ para nuevas funcionalidades
+   - Usar ramas bugfix/ para correcciones
+   - Mantener main y develop actualizadas
+
+2. **Code Review**
+   - Revisar código antes de merge
+   - Verificar estándares y convenciones
+   - Asegurar cobertura de tests
+
+3. **CI/CD**
+   - Ejecutar tests automáticamente
+   - Verificar calidad de código
+   - Desplegar en ambientes de prueba 
