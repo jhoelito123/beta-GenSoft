@@ -29,7 +29,7 @@ class Institucion(models.Model):
     nombre_institucion = models.CharField(max_length=30)
     codigo_institucion = models.CharField(max_length=10, unique=True)
     direccion = models.CharField(max_length=50)
-    telefono = models.BigIntegerField()
+    email_institucion = models.EmailField(max_length=30, help_text="Correo electrónico de la institucion")
     provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE)
 
     class Meta:
