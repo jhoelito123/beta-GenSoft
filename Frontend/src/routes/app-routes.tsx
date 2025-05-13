@@ -13,7 +13,6 @@ export default function AppRoutes() {
             path="/register-inst-educational"
             element={<RegisterInstPage />}
           />
-          <Route path="/register-teacher" element={< />} />
         </Route>
       </Routes>
     </BrowserRouter>

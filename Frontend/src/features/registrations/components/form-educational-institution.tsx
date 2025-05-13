@@ -54,9 +54,11 @@ export default function FormEducationalInstitution() {
         >
             <div className='flex flex-row w-full max-w-11/12 mx-auto gap-32'>
                 <div className='flex flex-col gap-5 items-center justify-center w-full'>
-                    <h1 className="text-start text-slate-800 mb-10 headline-lg">
-                        Registro de Datos de Tutor
+                    <div className="w-full mb-10">
+                    <h1 className="text-left text-slate-800 headline-lg">
+                        Registro de Instituciones Educativas
                     </h1>
+                    </div>
                     <div className='flex flex-row w-full gap-20'>
                         <InputText
                             label="Nombre de la Institución Educativa"
