@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 import { Home } from '../components/ui/home';
 import NavbarLayout from '../layouts/navbar-layout';
 import RegisterInstPage from '../features/registrations/pages/register-educational-institution';
+import { RegisterCoursePage } from '../features/courses/pages/register-course';
 
 export default function AppRoutes() {
   return (
@@ -13,6 +14,7 @@ export default function AppRoutes() {
             path="/register-inst-educational"
             element={<RegisterInstPage />}
           />
+          <Route path="/register-course" element={<RegisterCoursePage />} />
         </Route>
       </Routes>
     </BrowserRouter>
