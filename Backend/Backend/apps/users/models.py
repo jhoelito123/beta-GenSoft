@@ -39,7 +39,7 @@ class DocenteModel(models.Model):
     email_docente = models.EmailField(max_length=15, help_text="Correo electrónico del docente.")
     password_docente = models.CharField(max_length=255, help_text="Contraseña del docente (hasheada).")
     ci_docente = models.CharField(max_length=9, unique=True, help_text="Número de cédula de identidad único del docente.")
-    telefono_docente = models.IntegerField(max_length=8, help_text="Número de elular del docente")
+    telefono_docente = models.IntegerField(help_text="Número de elular del docente")
 
     class Meta:
         verbose_name = "Docente"
