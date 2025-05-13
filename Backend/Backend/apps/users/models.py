@@ -1,6 +1,6 @@
 from django.db import models
 
-class AdminModel(models.Model):
+class Admin(models.Model):
     #Modelo para representar a los administradores del sistema. 
     admin_id = models.AutoField(primary_key=True, help_text="Identificador único del administrador.")
     username_admin = models.CharField(max_length=30, unique=True, help_text="Nombre de usuario único del administrador.")
@@ -15,7 +15,7 @@ class AdminModel(models.Model):
         return self.username_admin
 
 
-class EstudianteModel(models.Model):
+class Estudiante(models.Model):
     #Modelo para representar a los estudiantes del sistema.
     id_estudiante = models.AutoField(primary_key=True, help_text="Identificador único del estudiante.")
     nombre_estudiante = models.CharField(max_length=30, help_text="Nombre del estudiante.")
@@ -31,7 +31,7 @@ class EstudianteModel(models.Model):
     def __str__(self):
         return f"{self.nombre_estudiante} {self.apellidos_estudiante}"
 
-class DocenteModel(models.Model):
+class Docente(models.Model):
     #Modelo para representar a los estudiantes del sistema.
     id_docente = models.AutoField(primary_key=True, help_text="Identificador único del docente.")
     nombre_docente = models.CharField(max_length=30, help_text="Nombre del docente.")

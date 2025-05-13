@@ -25,7 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.users', 
-    #'apps.education',
+    'apps.education',
     #pending
     #'evaluation',
     #'certificates',
