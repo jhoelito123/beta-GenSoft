@@ -1,10 +1,35 @@
 import { useForm } from 'react-hook-form';
 import { InputText } from '../../../components/ui/input';
 import { Button } from '../../../components';
+import { Dropdown } from '../../../components/ui/dropdown';
 
 type SimpleFormData = {
-  simpleInput: string;
+  educationalInstitution: string;
+  cod: string;
+  departamento: string;
+  provincia: string;
+  dirección: string;
+  nivel: string;
+  correo: string;
 };
+
+const departamentos = [
+  { id: '1', nombre: 'Cochabamba' },
+  { id: '2', nombre: 'La Paz' },
+  { id: '3', nombre: 'Sucre' },
+];
+
+const provincias = [
+  { id: '1', nombre: 'Cercado' },
+  { id: '2', nombre: 'Quillacollo' },
+  { id: '3', nombre: 'Tiquipaya' },
+];
+
+const niveles = [
+  { id: '1', nombre: 'Secundario' },
+  { id: '2', nombre: 'Universitario' },
+  { id: '3', nombre: 'Primario' },
+];
 
 export default function FormEducationalInstitution() {
   const {
@@ -21,17 +46,18 @@ export default function FormEducationalInstitution() {
   };
 
   return (
-    <div className="flex flex-col w-full h-full items-center bg-white">
+    <div className="flex flex-col w-10/12 max-w-screen h-full mt-10">
+        <div className="w-full h-6 rounded-t-2xl bg-indigo-500" />
         <form
             onSubmit={handleSubmit(onSubmit)}
-            className="mx-5 mt-10 w-full"
+            className="w-full flex flex-row justify-center shadow-lg rounded-2xl p-20 mx-auto"
         >
-            <div className='flex flex-row w-full justify-between'>
-                <div className='bg-white flex flex-col items-center justify-center min-w-11/12'>
-                    <h1 className="text-center text-slate-800 mb-8 md:mb-20 headline-lg">
+            <div className='flex flex-row w-full max-w-11/12 mx-auto gap-32'>
+                <div className='flex flex-col gap-5 items-center justify-center w-full'>
+                    <h1 className="text-start text-slate-800 mb-10 headline-lg">
                         Registro de Datos de Tutor
                     </h1>
-                    <div className='flex flex-row w-full'>
+                    <div className='flex flex-row w-full gap-20'>
                         <InputText
                             label="Nombre de la Institución Educativa"
                             name="educationalInstitution"
@@ -73,45 +99,29 @@ export default function FormEducationalInstitution() {
                             errors={errors}
                         />
                     </div>
-                    <div className='flex flex-row w-full'>
-                        <InputText
-                            label="Departamento"
+                    <div className='flex flex-row w-full gap-20'>
+                        <Dropdown
                             name="departamento"
-                            className="w-full"
+                            label="Departamento"
+                            options={departamentos}
+                            placeholder="Seleccione un departamento"
+                            displayKey="nombre"
+                            valueKey="id"
                             register={register}
-                            validationRules={{
-                                required: 'El departamento es obligatorio',
-                                minLength: {
-                                    value: 2,
-                                    message: 'Debe tener al menos 2 caracteres',
-                                },
-                                maxLength: {
-                                    value: 50,
-                                    message: 'No puede tener más de 50 caracteres',
-                                },
-                            }}
-                            errors={errors}
+                            isRequired
                         />
-                        <InputText
-                            label="Provincia"
+                        <Dropdown
                             name="provincia"
-                            className="w-full"
+                            label="Provincia"
+                            options={provincias}
+                            placeholder="Seleccione una provincia"
+                            displayKey="nombre"
+                            valueKey="id"
                             register={register}
-                            validationRules={{
-                                required: 'La provincia es obligatoria',
-                                minLength: {
-                                    value: 2,
-                                    message: 'Debe tener al menos 2 caracteres',
-                                },
-                                maxLength: {
-                                    value: 50,
-                                    message: 'No puede tener más de 50 caracteres',
-                                },
-                            }}
-                            errors={errors}
+                            isRequired
                         />
                     </div>
-                    <div className='flex flex-row w-full'>
+                    <div className='flex flex-row w-full gap-20'>
                         <InputText
                             label="Dirección"
                             name="dirección"
@@ -131,24 +141,16 @@ export default function FormEducationalInstitution() {
                             errors={errors}
                         />
                     </div>
-                    <div className='flex flex-row w-full'>
-                        <InputText
-                            label="Nivel Educativo"
+                    <div className='flex flex-row w-full gap-20'>
+                        <Dropdown
                             name="nivel"
-                            className="w-full"
+                            label="Nivel educativo"
+                            options={niveles}
+                            placeholder="Seleccione un nivel"
+                            displayKey="nombre"
+                            valueKey="id"
                             register={register}
-                            validationRules={{
-                                required: 'El nivel educativo es obligatorio',
-                                minLength: {
-                                    value: 2,
-                                    message: 'Debe tener al menos 2 caracteres',
-                                },
-                                maxLength: {
-                                    value: 50,
-                                    message: 'No puede tener más de 50 caracteres',
-                                },
-                            }}
-                            errors={errors}
+                            isRequired
                         />
                         <InputText
                             label="Correo electrónico"
@@ -172,7 +174,7 @@ export default function FormEducationalInstitution() {
                     <div className='flex flex-row w-full justify-between'>
                         <Button
                             label='Cancelar'
-                            variantColor='variant1'
+                            variantColor='variant2'
                         />
                         <Button
                             label='Registrar'
@@ -180,8 +182,8 @@ export default function FormEducationalInstitution() {
                         />
                     </div>
                 </div>
-                <div className='flex flex-col items-center justify-center min-w-5/12'>
-                    <img src="/assets/images/educational-institution.png" alt="imageInstitution" className="w-96" />
+                <div className='flex flex-col items-center justify-center w-7/12'>
+                    <img src="/assets/images/educational-institution.png" alt="imageInstitution" className="w-3xl" />
                 </div>
             </div>
         </form>

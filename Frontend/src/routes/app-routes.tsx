@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router';
 import { Home } from '../components/ui/home';
 import NavbarLayout from '../layouts/navbar-layout';
+import RegisterInstPage from '../features/registrations/pages/register-educational-institution';
 
 export default function AppRoutes() {
   return (
@@ -10,9 +11,8 @@ export default function AppRoutes() {
           <Route index element={<Home />} />
           <Route
             path="/register-inst-educational"
-            element={<RegisterInstEdu />}
+            element={<RegisterInstPage />}
           />
-          <Route path="/register-teacher" element={<RegisterTeacher />} />
         </Route>
       </Routes>
     </BrowserRouter>
