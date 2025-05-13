@@ -1,5 +1,4 @@
-import { ButtonProps } from "../../interfaces";
-
+import { ButtonProps } from '../../interfaces';
 
 export const Button = ({
   type = 'button',
@@ -18,6 +17,8 @@ export const Button = ({
     variant2:
       'text-blue-500 bg-white border-[1px] border-blue-500 hover:bg-neutral-200 cursor-pointer',
     variant3: 'text-white bg-emerald-500 hover:bg-emerald-600 cursor-pointer',
+    variant4:
+      'text-white bg-transparent border-[1px] border-white hover:border-emerald-500 cursor-pointer hover:text-emerald-500',
     variantDesactivate: 'bg-blue-500 text-white opacity-40',
   };
 
