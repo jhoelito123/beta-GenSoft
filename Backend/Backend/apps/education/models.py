@@ -8,13 +8,13 @@ class Departamento(models.Model):
     def __str__(self):
         return self.nombre_departamento
 
-class Municipio(models.Model):
-    id_municipio = models.AutoField(primary_key=True)
-    nombre_municipio = models.CharField(max_length=150)
+class Provincia(models.Model):
+    id_provincia = models.AutoField(primary_key=True)
+    nombre_provincia = models.CharField(max_length=150)
     departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.nombre_municipio
+        return self.nombre_provincia
     
 class NivelEducativo(models.Model):
     id_nivel_educativo = models.AutoField(primary_key=True)
@@ -29,8 +29,8 @@ class Institucion(models.Model):
     nombre_institucion = models.CharField(max_length=30)
     codigo_institucion = models.CharField(max_length=10, unique=True)
     direccion = models.CharField(max_length=50)
-    telefono = models.BigIntegerField()
-    municipio = models.ForeignKey(Municipio, on_delete=models.CASCADE)
+    email_institucion = models.EmailField(max_length=30, help_text="Correo electrónico de la institucion")
+    provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Institución"
