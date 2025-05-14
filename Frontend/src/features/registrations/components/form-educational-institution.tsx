@@ -50,11 +50,11 @@ export default function FormEducationalInstitution() {
         <div className="w-full h-6 rounded-t-2xl bg-indigo-500" />
         <form
             onSubmit={handleSubmit(onSubmit)}
-            className="w-full flex flex-row justify-center shadow-lg rounded-2xl p-20 mx-auto"
+            className="w-full flex flex-row justify-center shadow-lg rounded-2xl p-10 mx-auto"
         >
             <div className='flex flex-row w-full max-w-11/12 mx-auto gap-32'>
                 <div className='flex flex-col gap-5 items-center justify-center w-full'>
-                    <div className="w-full mb-10">
+                    <div className="w-full mb-5">
                     <h1 className="text-left text-slate-800 headline-lg">
                         Registro de Instituciones Educativas
                     </h1>
@@ -143,7 +143,7 @@ export default function FormEducationalInstitution() {
                             errors={errors}
                         />
                     </div>
-                    <div className='flex flex-row w-full gap-20'>
+                    <div className='flex flex-row w-full gap-20 mb-5'>
                         <Dropdown
                             name="nivel"
                             label="Nivel educativo"
