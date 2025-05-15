@@ -1,4 +1,5 @@
 from django.db import models
+from apps.users.models import Admin
 
 class Departamento(models.Model):
     id_departamento = models.AutoField(primary_key=True)
@@ -25,12 +26,13 @@ class NivelEducativo(models.Model):
     
 class Institucion(models.Model):
     id_institucion = models.AutoField(primary_key=True)
-    admin_id = 1 #static, cambiar cuando se implemente
+    admin_id = models.ForeignKey(Admin,on_delete=models.CASCADE)
     nombre_institucion = models.CharField(max_length=30)
     codigo_institucion = models.CharField(max_length=10, unique=True)
     direccion = models.CharField(max_length=50)
     email_institucion = models.EmailField(max_length=30, help_text="Correo electrónico de la institucion")
     provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE)
+    nivel_institucion = models.ForeignKey(NivelEducativo, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Institución"
