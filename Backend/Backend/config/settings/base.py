@@ -70,7 +70,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'neondb',
+        'NAME': 'pystart',
         'USER': 'neondb_owner',
         'PASSWORD': 'npg_HN5OydTq2EPk',
         'HOST': 'ep-dark-bar-a4pdtrbr-pooler.us-east-1.aws.neon.tech',
