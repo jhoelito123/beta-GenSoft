@@ -3,7 +3,7 @@ from django.db import models
 class Usuario(models.Model):
     user_id = models.AutoField(primary_key=True, help_text="Identificador de usuario" )
     username_user = models.CharField(max_length=30, help_text="Nombre de usuario")
-    password_user = models.CharField(max_length=15, help_text="Contraseña del usuario")
+    password_user = models.CharField(max_length=130, help_text="Contraseña del usuario")
     email_user = models.EmailField    (max_length=30, unique=True, help_text="Correo electrónico del usuario.")
     is_active = models.BooleanField(default=True, help_text="Indica si la cuenta del usuario está activa")
     date_joined = models.DateTimeField(auto_now_add=True, help_text="Fecha y hora de registro del usuario")    
