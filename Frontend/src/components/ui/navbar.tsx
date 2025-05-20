@@ -18,7 +18,7 @@ export default function Navbar({
   const location = useLocation();
 
   return (
-    <ul className="hidden lg:flex items-center justify-end w-screen space-x-16 mr-5 bg-slate-900">
+    <ul className="hidden lg:flex items-center justify-end w-screen space-x-12 mr-5 bg-slate-900">
       <li
         className={`${location.pathname === '/' ? 'text-emerald-500' : 'text-white'}`}
         ref={adminMenuRef}
@@ -43,6 +43,7 @@ export default function Navbar({
             path: '/register-inst-educational',
           },
           { label: 'Registro Docente', path: '/register-teacher' },
+          { label: 'Registro Curso', path: '/register-course' },
         ]}
       />
       <IconBell />
