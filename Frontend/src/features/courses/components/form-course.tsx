@@ -33,10 +33,10 @@ export default function FormCourse() {
   };
 
   return (
-    <div className="flex flex-col w-full">
-      <div className="flex flex-col items-center ">
+    <div className="flex flex-col w-10/12 max-w-screen h-full mt-10">
+      <div className="w-full h-6 rounded-t-2xl bg-indigo-500">
         <form
-          className="mx-5 mt-10 mb-32 md:w-9/12 lg:w-9/12"
+          className="mx-5 mt-10 mb-32 p-4"
           onSubmit={handleSubmit(onSubmit)}
         >
           <h1 className="text-slate-900 headline-lg sm:text-xl md:text-2xl font-semibold mb-6">
