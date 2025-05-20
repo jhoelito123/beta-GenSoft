@@ -19,7 +19,7 @@ class Admin(models.Model):
         verbose_name_plural = "Administradores"
 
     def __str__(self):
-        return self.username_admin
+        return self.user_id.username_user
 
 
 class Estudiante(models.Model):
