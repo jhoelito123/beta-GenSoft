@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Departamento, Provincia
+from .models import Departamento, Provincia, NivelEducativo
 
 class DepartamentoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -9,4 +9,9 @@ class DepartamentoSerializer(serializers.ModelSerializer):
 class ProvinciaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Provincia
+        fields = '__all__'
+    
+class NivelEducativoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NivelEducativo
         fields = '__all__'

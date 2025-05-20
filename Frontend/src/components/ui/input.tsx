@@ -4,7 +4,6 @@ import { InputProps } from '../../interfaces';
 export const InputText = <T extends FieldValues>({
   label,
   name,
-  placeholder = '',
   type = 'text',
   className = '',
   labelPadding = '',

@@ -39,7 +39,7 @@ export default function NavbarLayout() {
         <div className="flex justify-between items-center w-full h-full">
           <Link to="/" className="flex items-center">
             <img
-              src="../../public/icons/pystart.png"
+              src="/icons/pystart.png"
               alt="Logo"
               className="h-10 "
             />
