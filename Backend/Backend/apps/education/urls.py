@@ -8,4 +8,5 @@ urlpatterns = [
     path('provincias/<int:pk>/', views.ProvinciaDetail.as_view(), name='provincia-detail'),
     path('departamentos/<int:departamento_id>/provincias/', views.ProvinciasPorDepartamento.as_view(), name='provincias-por-departamento'),
     path('nivel-educativo/', views.NivelAcademicoList.as_view(), name='nivel-academico-list'),
+    path('instituciones/', views.InstitucionCreateView.as_view(), name='institucion-list-create'),
 ]

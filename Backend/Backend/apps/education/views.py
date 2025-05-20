@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .models import Departamento, Provincia, NivelEducativo
-from .serializers import DepartamentoSerializer, ProvinciaSerializer, NivelEducativoSerializer
+from .models import Departamento, Provincia, NivelEducativo, Institucion
+from .serializers import DepartamentoSerializer, ProvinciaSerializer, NivelEducativoSerializer, InstitucionSerializer
 
 class DepartamentoList(generics.ListAPIView):
     queryset = Departamento.objects.all()
@@ -29,3 +29,7 @@ class ProvinciasPorDepartamento(generics.ListAPIView):
 class NivelAcademicoList(generics.ListAPIView):
     queryset = NivelEducativo.objects.all()
     serializer_class = NivelEducativoSerializer
+
+class InstitucionCreateView(generics.CreateAPIView):
+    queryset = Institucion.objects.all()
+    serializer_class = InstitucionSerializer
