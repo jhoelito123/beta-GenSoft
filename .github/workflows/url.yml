@@ -1,0 +1,37 @@
+name: Django URLs CI
+
+on:
+  push:
+    branches:
+      - feat/urls  # o la rama que estás usando
+    paths:
+      - 'Backend/Backend/apps/education/urls.py'
+  pull_request:
+    branches:
+      - feat/urls
+    paths:
+      - 'Backend/Backend/apps/education/urls.py'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependencias
+        run: |
+          cd Backend
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Ejecutar pruebas
+        run: |
+          cd Backend
+          python manage.py test
