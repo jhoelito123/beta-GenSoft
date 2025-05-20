@@ -5,7 +5,6 @@ import { Dropdown } from '../../../components/ui/dropdown';
 import { useFetchData } from '../../../hooks/use-fetch-data';
 import {
   Departamento,
-  Provincia,
 } from '../interfaces/register-institution';
 
 type SimpleFormData = {
@@ -17,8 +16,7 @@ type SimpleFormData = {
   nivel: string;
   correo: string;
 };
-const { data: departamentos, loading: loadingDepartamentos } =
-    useFetchData<Departamento[]>('/education/departments');
+
 
 const provincias = [
   { id: '1', nombre: 'Cercado' },
@@ -33,6 +31,9 @@ const niveles = [
 ];
 
 export default function FormEducationalInstitution() {
+    const { data: departamentos, loading: loadingDepartamentos } =
+    useFetchData<Departamento[]>('/education/departamentos');
+    console.log(departamentos);
   const {
     register,
     handleSubmit,
