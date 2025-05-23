@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import Departamento, Provincia, NivelEducativo, Institucion
-from ..users.models import Admin
 
 class DepartamentoSerializer(serializers.ModelSerializer):
     class Meta:
