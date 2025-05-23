@@ -24,7 +24,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #'rest_framework',
+    'rest_framework',
+    'corsheaders',
     'apps.users', 
     'apps.education',
     #pending
@@ -36,6 +37,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -98,6 +100,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# CORS configuration
+CORS_ALLOW_ALL_ORIGINS = False #Cambio a false en el deploy/true en pruebas
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173", # Vite+React allow
+    # Frontend desplegado
+    #"https://pystart.onrender.com", # ejm si usamos Render
+]
 
 # Internationalization
 
