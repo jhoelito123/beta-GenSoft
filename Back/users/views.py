@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.permissions import AllowAny
 from .models import Admin, Docente
-from .....Back.users.serializers import AdminCreateSerializer, DocenteCreateSerializer, DocenteDetailSerializer
+from .serializers import AdminCreateSerializer, DocenteCreateSerializer, DocenteDetailSerializer
 
 class AdminCreateView(generics.CreateAPIView):
     queryset = Admin.objects.all()
