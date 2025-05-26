@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .models import Departamento, Provincia, NivelEducativo, Institucion, Modulo, Idioma, DificultadCurso 
-from .serializers import DepartamentoSerializer, ProvinciaSerializer, NivelEducativoSerializer, InstitucionSerializer, ModuloSerializer, IdiomaSerializer, DificultadSerializer
+from .models import Departamento, Provincia, NivelEducativo, Institucion, Modulo, Idioma, DificultadCurso, Curso
+from .serializers import DepartamentoSerializer, ProvinciaSerializer, NivelEducativoSerializer, InstitucionSerializer, ModuloSerializer, IdiomaSerializer, DificultadSerializer, CursoCreateSerializer, CursoSerializer
 
 class DepartamentoList(generics.ListAPIView):
     queryset = Departamento.objects.all()
@@ -45,3 +45,11 @@ class IdiomaDetail(generics.ListAPIView):
 class DificultadDetail(generics.ListAPIView):
     queryset = DificultadCurso.objects.all()
     serializer_class = DificultadSerializer
+
+class CursoCreateView(generics.CreateAPIView):
+    queryset = Curso.objects.all()
+    serializer_class = CursoCreateSerializer
+
+class CursoDetail(generics.ListAPIView):
+    queryset = Curso.objects.all()
+    serializer_class = CursoSerializer

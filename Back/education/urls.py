@@ -9,8 +9,9 @@ urlpatterns = [
     path('departamentos/<int:departamento_id>/provincias/', views.ProvinciasPorDepartamento.as_view(), name='provincias-por-departamento'),
     path('nivel-educativo/', views.NivelAcademicoList.as_view(), name='nivel-academico-list'),
     path('instituciones/', views.InstitucionCreateView.as_view(), name='institucion-list-create'),
-    path('modulos/', views.ModuloDetail.as_view(), name='Modulos list'),
-    path('idiomas/', views.IdiomaDetail.as_view(), name="Languages list"),
-    path('dificultad/', views.DificultadDetail.as_view(), name='Dificults list'),
-    
+    path('modulos/', views.ModuloDetail.as_view(), name='modulos-list'),
+    path('idiomas/', views.IdiomaDetail.as_view(), name="languages-list"),
+    path('dificultad/', views.DificultadDetail.as_view(), name='dificults-list'),
+    path('curso/', views.CursoDetail.as_view(), name='courses-list'),
+    path('curso/create/', views.CursoCreateView.as_view(), name='course-create'),
 ]
