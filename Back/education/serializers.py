@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Departamento, Provincia, NivelEducativo, Institucion
+from .models import Departamento, Provincia, NivelEducativo, Institucion, Modulo, Idioma, DificultadCurso
 
 class DepartamentoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -31,3 +31,18 @@ class InstitucionSerializer(serializers.ModelSerializer):
             'nivel_institucion',
         ]
         read_only_fields = ['id_institucion']
+
+class ModuloSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Modulo
+        fields = '__all__'
+
+class IdiomaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Idioma
+        fields = '__all__'
+    
+class DificultadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DificultadCurso
+        fields = '__all__'
