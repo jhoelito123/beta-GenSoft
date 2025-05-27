@@ -45,7 +45,7 @@
 .subtitle-lg {
   font-family: 'Roboto', sans-serif;
   font-size: 22px;
-  font-weight: 400; /* Regular */
+  font-weight: 600; /* Regular */
   line-height: 28px;
 }
 
@@ -59,7 +59,7 @@
 .subtitle-sm {
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 20px;
 }
 
