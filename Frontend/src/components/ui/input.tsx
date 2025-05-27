@@ -57,6 +57,7 @@ export const InputText = <T extends FieldValues>({
             peer-placeholder-shown:top-5 peer-placeholder-shown:subtitle-sm
             peer-focus:top-0 peer-focus:text-xs peer-focus:text-slate-900
             ${labelPadding}
+            max-w-full overflow-hidden whitespace-nowrap text-ellipsis
           `}
         >
           {label} {isRequired && <span className="text-red-400">*</span>}
