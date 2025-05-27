@@ -1,14 +1,18 @@
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { InputText } from '../../../components/ui/input';
 import { Button } from '../../../components';
 import { Dropdown } from '../../../components/ui/dropdown';
 import { TextArea } from '../../../components/ui/textarea';
 import { UploadCover } from '../../../components/ui/upload-cover';
+import { useEffect } from 'react';
 export default function FormCourse() {
   const {
     register,
     setValue,
+    watch,
     handleSubmit,
+    control,
+    trigger,
     formState: { errors, isValid },
   } = useForm({ mode: 'onChange' });
   const levels = [
@@ -28,6 +32,15 @@ export default function FormCourse() {
     { id: 2, nombre: 'Cerrado' },
   ];
 
+  const dateIni = useWatch({ control, name: 'course.dateini' });
+  const dateEnd = useWatch({ control, name: 'course.dateend' });
+
+  useEffect(() => {
+    if (dateEnd) {
+      trigger('course.dateend');
+    }
+  }, [dateIni]);
+
   const onSubmit = (data: any) => {
     console.log(data);
   };
@@ -40,7 +53,7 @@ export default function FormCourse() {
           onSubmit={handleSubmit(onSubmit)}
         >
           <h1 className="text-slate-900 headline-lg sm:text-xl md:text-2xl font-semibold mb-6">
-            Registrar Curso
+            Registro de Curso
           </h1>
           <div className="flex space-x-9">
             <div className="w-9/12">
@@ -54,9 +67,9 @@ export default function FormCourse() {
                     required: 'El nombre del curso es obligatorio',
                     pattern: {
                       value:
-                        /^[A-Za-zÑñÁÉÍÓÚáéíóú]+(?: [A-Za-zÑñÁÉÍÓÚáéíóú]+)*$/,
+                        /^[A-Za-zÑñÁÉÍÓÚáéíóú0-9]+(?: [A-Za-zÑñÁÉÍÓÚáéíóú0-9]+)*$/,
                       message:
-                        'Solo se permiten letras y un solo espacio entre palabras',
+                        'Solo se permiten letras, números y un espacio entre palabras',
                     },
                   }}
                   errors={errors}
@@ -96,16 +109,40 @@ export default function FormCourse() {
                   label="Fecha de inicio"
                   name="course.dateini"
                   type="date"
-                  className="w-full "
+                  className="w-full"
                   register={register}
+                  validationRules={{
+                    required: 'La fecha de inicio es obligatoria',
+                    validate: (value: string) => {
+                      const selectedDate = new Date(value);
+                      const today = new Date();
+                      today.setHours(0, 0, 0, 0); // Ignorar la hora
+                      return (
+                        selectedDate > today ||
+                        'La fecha de inicio debe ser mayor a hoy'
+                      );
+                    },
+                  }}
                   errors={errors}
                 />
                 <InputText
                   label="Fecha de cierre"
                   name="course.dateend"
                   type="date"
-                  className="w-full "
+                  className="w-full"
                   register={register}
+                  validationRules={{
+                    required: 'La fecha de cierre es obligatoria',
+                    validate: (value: string) => {
+                      if (!dateIni) return true; // aún no hay fecha de inicio
+                      const end = new Date(value);
+                      const start = new Date(dateIni);
+                      return (
+                        end > start ||
+                        'La fecha de cierre debe ser mayor a la fecha de inicio'
+                      );
+                    },
+                  }}
                   errors={errors}
                 />
               </div>
