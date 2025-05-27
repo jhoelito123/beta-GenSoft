@@ -100,6 +100,24 @@ class Seccion(models.Model):
     
     def __str__(self):
         return self.nombre_seccion
+class TipoRecurso(models.Model):
+    id_tipo_recurso = models.AutoField(primary_key=True)
+    tipo_recurso = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.tipo_recurso
+    
+class Recurso(models.Model):
+    id_recurso = models.AutoField(primary_key=True)
+    nombre_recurso = models.CharField(max_length=30)
+    # url_recurso = models.URLField(max_length=1000)
+    url_recurso = models.CharField(max_length=1000)
+    archivo_recurso = models.FileField(upload_to='recursos/', null=True, blank=True)
+    texto_recurso = models.TextField(null = True, blank=True)
+    tipo_recurso = models.ForeignKey(TipoRecurso, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.nombre_recurso
 
 @receiver(post_save, sender=Seccion)
 def update_curso_duration_on_seccion_save(sender, instance, **kwargs):
