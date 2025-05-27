@@ -47,6 +47,10 @@ export const Dropdown = <T extends FieldValues>({
 
   const fieldError = getNestedError(errors, name);
 
+  const registered = register?.(name, {
+    required: isRequired ? `${label} es requerido` : false,
+  });
+
   return (
     <div className="flex flex-col w-full">
       <div className="relative w-full">
@@ -59,12 +63,12 @@ export const Dropdown = <T extends FieldValues>({
             focus:outline-none focus:border-slate-900 bg-transparent
             ${fieldError ? 'border-red-400' : ''}
           `}
-          {...(register &&
-            register(name, {
-              required: isRequired ? `${label} es requerido` : false,
-            }))}
+          {...registered}
           value={value}
-          onChange={onChange}
+          onChange={(e) => {
+            registered?.onChange(e); 
+            onChange?.(e); 
+          }}
         >
           <option
             value=""
