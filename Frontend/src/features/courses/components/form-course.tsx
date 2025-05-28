@@ -5,6 +5,8 @@ import { Dropdown } from '../../../components/ui/dropdown';
 import { TextArea } from '../../../components/ui/textarea';
 import { UploadCover } from '../../../components/ui/upload-cover';
 import { useEffect } from 'react';
+import { useFetchData } from '../../../hooks/use-fetch-data';
+import { API_URL } from '../../../config/api-config';
 export default function FormCourse() {
   const {
     register,
@@ -15,22 +17,14 @@ export default function FormCourse() {
     trigger,
     formState: { errors, isValid },
   } = useForm({ mode: 'onChange' });
-  const levels = [
-    { id: 1, nombre: 'Básico' },
-    { id: 2, nombre: 'Intermedio' },
-    { id: 3, nombre: 'Avanzado' },
-  ];
 
-  const languages = [
-    { id: 1, nombre: 'Español' },
-    { id: 2, nombre: 'Ingles' },
-    { id: 3, nombre: 'Quechua' },
-    { id: 4, nombre: 'Aymara' },
-  ];
-  const statusc = [
-    { id: 1, nombre: 'Abierto' },
-    { id: 2, nombre: 'Cerrado' },
-  ];
+  const { data: levels } = useFetchData<
+    { id_dificultad: number; dificultad_curso: string }[]
+  >(`${API_URL}/education/dificultad`);
+
+  const { data: languages } = useFetchData<
+    { id_idioma: number; idioma: string }[]
+  >(`${API_URL}/education/idiomas`);
 
   const dateIni = useWatch({ control, name: 'course.dateini' });
   const dateEnd = useWatch({ control, name: 'course.dateend' });
@@ -57,7 +51,7 @@ export default function FormCourse() {
           </h1>
           <div className="flex space-x-9">
             <div className="w-9/12">
-              <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-9 mb-6">
+              <div className="grid grid-cols-1 gap-9 mb-6">
                 <InputText
                   label="Nombre del curso"
                   name="course.name"
@@ -74,33 +68,34 @@ export default function FormCourse() {
                   }}
                   errors={errors}
                 />
+              </div>
+              <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-9 mb-6">
                 <Dropdown
                   name="course.level"
                   label="Nivel"
-                  options={levels}
+                  options={
+                    levels?.map((item) => ({
+                      id: item.id_dificultad,
+                      nombre: item.dificultad_curso,
+                    })) || []
+                  }
                   displayKey="nombre"
                   valueKey="id"
                   placeholder="Selecciona un nivel"
                   register={register}
                 />
-              </div>
-              <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-9 mb-6">
                 <Dropdown
                   name="course.language"
                   label="Idioma"
-                  options={languages}
+                  options={
+                    languages?.map((item) => ({
+                      id: item.id_idioma,
+                      nombre: item.idioma,
+                    })) || []
+                  }
                   displayKey="nombre"
                   valueKey="id"
                   placeholder="Selecciona un idioma"
-                  register={register}
-                />
-                <Dropdown
-                  name="course.status"
-                  label="Estado"
-                  options={statusc}
-                  displayKey="nombre"
-                  valueKey="id"
-                  placeholder="Selecciona un estado"
                   register={register}
                 />
               </div>
