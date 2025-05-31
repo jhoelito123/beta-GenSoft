@@ -6,6 +6,7 @@ from rest_framework import status
 import subprocess
 import tempfile
 import os
+import re
 from datetime import timedelta # Necesario si usas DurationField en modelos
 from django.db.models import Sum
 from .models import Departamento, Provincia, NivelEducativo, Institucion, Modulo, Idioma, DificultadCurso, Curso
@@ -81,11 +82,10 @@ class CodeExecutorAPIView(APIView):
         output = ""
         execution_status = "success"
         timeout_seconds = 5  # 5 sec para evitar bucles infinitos
+        temp_file_path = None
 
         try:
             # 1. Crear un archivo temporal para el código Python
-            # 'delete=False' es importante para que el archivo no se borre inmediatamente,
-            # permitiendo a subprocess acceder a él. Lo borraremos manualmente.
             with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.py', encoding='utf-8') as temp_file:
                 temp_file.write(code)
                 temp_file_path = temp_file.name
@@ -106,7 +106,7 @@ class CodeExecutorAPIView(APIView):
                 output += "\n" + result.stderr
 
             # 4. Determinar el estado de la ejecución
-            if result.returncode != 0: # Si el código de retorno no es 0, hubo un error en la ejecución
+            if result.returncode != 0:
                 execution_status = "error"
             elif "Timeout" in output: 
                 execution_status = "timeout" 
@@ -124,6 +124,17 @@ class CodeExecutorAPIView(APIView):
             # 5. Limpiar el archivo temporal
             if 'temp_file_path' in locals() and os.path.exists(temp_file_path):
                 os.remove(temp_file_path)
+                
+        #Limpiado del nombre del archivo en el output
+        if temp_file_path:
+             # Escapar la ruta para que sea segura en la regex (especialmente en Windows con '\')
+            escaped_temp_path = re.escape(temp_file_path)
+            output = re.sub(rf"File \"{escaped_temp_path}\", line (\d+), in <module>", r"File \"<string>\", line \1, in <module>", output)
+            output = re.sub(rf"File \"{escaped_temp_path}\"", r"File \"<string>\"", output)
+        
+        # Eliminar cualquier otra ruta temporal que pueda aparecer, aunque el anterior es el más común
+        output = re.sub(r"File \".*?tmp[a-zA-Z0-9]+\.py\", line (\d+), in <module>", r"File \"<string>\", line \1, in <module>", output)
+        output = re.sub(r"File \".*?tmp[a-zA-Z0-9]+\.py\"", r"File \"<string>\"", output)
 
         # 6. Preparar la respuesta usando el Output Serializer
         output_data = {
