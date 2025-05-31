@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import Editor, { OnMount, OnChange } from '@monaco-editor/react';
 import { CodeEditorProps } from '../../interfaces';
+import { Button } from './button';
 
 const CodeEditor: React.FC<CodeEditorProps> = ({
   code,
@@ -39,22 +40,15 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
     <div className="flex flex-col h-full bg-gray-800 text-white p-6 rounded-lg shadow-xl border border-gray-700">
       <div className="flex justify-between items-center mb-6">
         <h2 className="subtitle-lg">Código ({language})</h2>
-        <button 
+         <Button
           onClick={onExecute}
           disabled={loading}
-          className={`
-            button-lg
-            px-8 py-3 rounded-lg
-            font-semibold transition-all duration-200
-            ${
-              loading
-                ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
-                : 'bg-blue-600 hover:bg-blue-700 text-white'
-            }
-          `}
-        >
-          {loading ? 'Ejecutando...' : 'Ejecutar Código'}
-        </button>
+          loading={loading}
+          label="Ejecutar Código" 
+          loadingText="Ejecutando..."
+          variantColor="variant1"
+          className="px-8 py-3 rounded-lg font-semibold"
+        />
       </div>
 
       {/* Editor Config*/}
