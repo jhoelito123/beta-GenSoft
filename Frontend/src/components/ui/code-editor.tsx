@@ -1,14 +1,6 @@
 import React, { useRef } from 'react';
 import Editor, { OnMount, OnChange } from '@monaco-editor/react';
-
-interface CodeEditorProps {
-  code: string;
-  language: string;
-  onCodeChange: (newCode: string | undefined) => void;
-  output: string;
-  loading: boolean;
-  onExecute: () => void;
-}
+import { CodeEditorProps } from '../../interfaces';
 
 const CodeEditor: React.FC<CodeEditorProps> = ({
   code,
