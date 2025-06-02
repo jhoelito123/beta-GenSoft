@@ -51,5 +51,5 @@ jobs:
           python manage.py makemigrations --noinput
           python manage.py migrate
 
-      - name: Run tests
+      - name: Run tests modelos depto and provincia
         run: python manage.py test
