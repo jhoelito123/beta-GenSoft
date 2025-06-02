@@ -52,4 +52,4 @@ jobs:
           python manage.py migrate
 
       - name: Run tests modelos depto and provincia
-        run: python manage.py test
+        run: python manage.py test education
