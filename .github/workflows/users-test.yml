@@ -43,13 +43,17 @@ jobs:
 
       - name: Install dependencies
         run: |
+          cd Backend
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Run migrations
         run: |
+          cd Backend
           python manage.py makemigrations --noinput
           python manage.py migrate
 
       - name: Run users test, create user
-        run: python manage.py test users
+        run: |
+          cd Backend
+          python manage.py test users
