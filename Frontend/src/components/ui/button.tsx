@@ -8,9 +8,11 @@ export const Button = ({
   disabled = false,
   icon: Icon,
   className = '',
+  loading = false,
+  loadingText = 'Cargando...',
 }: ButtonProps) => {
   const baseButton =
-    'button-lg rounded-[5px] h-10 pl-4 pr-5  text-center flex items-center whitespace-nowrap';
+    'button-lg rounded-[5px] h-10 pl-4 pr-5 text-center flex items-center whitespace-nowrap';
 
   const varCol: Record<string, string> = {
     variant1: 'text-white bg-blue-500 hover:bg-blue-600 cursor-pointer',
@@ -22,15 +24,28 @@ export const Button = ({
     variantDesactivate: 'bg-blue-500 text-white opacity-40',
   };
 
+  const currentVariantColorClasses = loading || disabled
+    ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
+    : varCol[variantColor];
+
   return (
     <button
       type={type}
       onClick={onClick}
-      disabled={disabled}
-      className={`${baseButton} ${varCol[variantColor]} ${className} flex items-center justify-center`}
+      disabled={disabled || loading}
+      className={`${baseButton} ${currentVariantColorClasses} ${className} flex items-center justify-center transition-all duration-200`} // Añadí transition-all aquí para la suavidad
     >
-      {Icon && <Icon className="mr-0" />}
-      <p className="pl-1 text-center text-wrap">{label}</p>
+      {loading ? (
+        <>
+          {<span className="animate-spin mr-2">↻</span>}
+          <p className="pl-1 text-center text-wrap">{loadingText}</p>
+        </>
+      ) : (
+        <>
+          {Icon && <Icon className="mr-0" />}
+          <p className="pl-1 text-center text-wrap">{label}</p>
+        </>
+      )}
     </button>
   );
 };
