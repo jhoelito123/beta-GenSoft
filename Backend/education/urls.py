@@ -14,4 +14,6 @@ urlpatterns = [
     path('dificultad/', views.DificultadDetail.as_view(), name='dificults-list'),
     path('curso/', views.CursoDetail.as_view(), name='courses-list'),
     path('curso/create/', views.CursoCreateView.as_view(), name='course-create'),
+    path('execute-code/', views.CodeExecutorAPIView.as_view(), name='execute-code'),
+
 ]

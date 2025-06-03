@@ -71,3 +71,34 @@ class CursoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Curso
         fields = '__all__'
+    
+class CodeExecutionInputSerializer(serializers.Serializer):
+    code = serializers.CharField(
+        style={'base_template': 'textarea.html'},
+        help_text="El código Python a ejecutar."
+    )
+    language = serializers.CharField(
+        max_length=50,
+        help_text="El lenguaje de programación es python."
+    )
+
+# Serializer para la salida de datos del ejecutor de código
+class CodeExecutionOutputSerializer(serializers.Serializer):
+    output = serializers.CharField(
+        help_text="La salida estándar (stdout) y/o errores (stderr) de la ejecución del código."
+    )
+    status = serializers.CharField(
+        max_length=20,
+        help_text="El estado de la ejecución (e.g., 'success', 'error', 'timeout')."
+    )
+    error_message = serializers.CharField(
+        required=False,
+        allow_null=True,
+        help_text="Mensaje de error detallado si la ejecución falló."
+    )
+    error_type = serializers.CharField(
+        required=False,
+        allow_null=True,
+        max_length=50,
+        help_text="Tipo de error (e.g., 'SyntaxError', 'TimeoutError')."
+    )
