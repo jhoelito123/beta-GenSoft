@@ -58,3 +58,99 @@ class UsuarioModelTest(TestCase):
         user.save()
         user.refresh_from_db() # Recargar el objeto desde la DB para asegurar
         self.assertAlmostEqual(user.last_login, now, delta=timedelta(seconds=1))
+
+
+class AdminModelTest(TestCase):
+    def setUp(self):
+        # usuario para asociarlo al admin
+        self.user = Usuario.objects.create(
+            username_user='adminuser',
+            password_user='adminpass',
+            email_user='admin@example.com'
+        )
+
+    def test_create_admin_successfully(self):
+        #test positivo: creación de admin
+        admin = Admin.objects.create(user_id=self.user)
+        self.assertEqual(Admin.objects.count(), 1)
+        self.assertEqual(admin.user_id, self.user)
+        self.assertIsNotNone(admin.admin_id)
+
+    def test_delete_usuario_cascades_admin(self):
+        #si se elimina el usuario, el admin también se elimina con cascada
+        admin = Admin.objects.create(user_id=self.user)
+        self.assertEqual(Admin.objects.count(), 1)
+        self.user.delete()
+        self.assertEqual(Admin.objects.count(), 0) # El admin debería haberse eliminado
+
+
+    """
+    Tests para el modelo Docente.
+    """
+
+    def setUp(self):
+        self.user = Usuario.objects.create(
+            username_user='teacheruser',
+            password_user='teacherpass',
+            email_user='teacher@example.com'
+        )
+        self.docente_data = {
+            'user_id': self.user,
+            'nombre_docente': 'Ana',
+            'apellidos_docente': 'Lopez',
+            'ci_docente': '7654321',
+            'telefono_docente': 78901234
+        }
+
+    def test_create_docente_successfully(self):
+        """
+        Verifica que se puede crear un docente exitosamente.
+        """
+        docente = Docente.objects.create(**self.docente_data)
+        self.assertEqual(Docente.objects.count(), 1)
+        self.assertEqual(docente.nombre_docente, 'Ana')
+        self.assertEqual(docente.ci_docente, '7654321')
+        self.assertEqual(docente.telefono_docente, 78901234)
+
+    def test_create_docente_with_duplicate_ci(self):
+        """
+        Verifica que no se puede crear un docente con CI duplicado (unique=True).
+        """
+        Docente.objects.create(**self.docente_data) # Primer docente
+        
+        with self.assertRaises(IntegrityError):
+            Docente.objects.create(
+                user_id=Usuario.objects.create(username_user='another_teacher', password_user='pass', email_user='another_t@example.com'),
+                nombre_docente='Pedro',
+                apellidos_docente='Ramirez',
+                ci_docente='7654321', # CI duplicado
+                telefono_docente=65432109
+            )
+        self.assertEqual(Docente.objects.count(), 1)
+
+    def test_docente_str_representation(self):
+        """
+        Verifica el método __str__ del modelo Docente.
+        """
+        docente = Docente.objects.create(**self.docente_data)
+        self.assertEqual(str(docente), 'Ana Lopez')
+
+    def test_telefono_docente_is_integer(self):
+        """
+        Verifica que el campo telefono_docente acepte enteros.
+        """
+        docente = Docente.objects.create(**self.docente_data)
+        self.assertIsInstance(docente.telefono_docente, int)
+        self.assertEqual(docente.telefono_docente, 78901234)
+    
+    def test_ci_max_length_validation(self):
+        """
+        Verifica la validación de longitud máxima para ci_docente.
+        """
+        invalid_ci = '1' * 10 # 10 caracteres, max_length es 9
+        docente_data = self.docente_data.copy()
+        docente_data['ci_docente'] = invalid_ci
+
+        docente_obj = Docente(**docente_data)
+        with self.assertRaises(ValidationError):
+            docente_obj.full_clean()
