@@ -13,12 +13,10 @@ interface FormData {
   module: string;
   level: string;
   language: string;
-  course: {
-    name: string;
-    desc: string;
-    dateini: string;
-    dateend: string;
-  };
+  name: string;
+  desc: string;
+  dateini: string;
+  dateend: string;
   image: FileList | null;
 }
 
@@ -36,12 +34,10 @@ export default function FormCourse() {
       module: '',
       level: '',
       language: '',
-      course: {
-        name: '',
-        desc: '',
-        dateini: '',
-        dateend: '',
-      },
+      name: '',
+      desc: '',
+      dateini: '',
+      dateend: '',
       image: null,
     },
   });
@@ -60,11 +56,11 @@ export default function FormCourse() {
     { id_idioma: number; idioma: string }[]
   >(`${API_URL}/education/idiomas`);
 
-  const dateIni = useWatch({ control, name: 'course.dateini' });
-  const dateEnd = useWatch({ control, name: 'course.dateend' });
+  const dateIni = useWatch({ control, name: 'dateini' });
+  const dateEnd = useWatch({ control, name: 'dateend' });
   useEffect(() => {
     if (dateEnd) {
-      trigger('course.dateend');
+      trigger('dateend');
     }
   }, [dateIni, dateEnd, trigger]);
   const onSubmit = async (data: FormData) => {
@@ -75,29 +71,28 @@ export default function FormCourse() {
         alert('Por favor selecciona una imagen');
         setIsSubmitting(false);
         return;
-      } 
+      }
       const imageResult = await uploadFile(data.image[0]);
 
       if (!imageResult) {
         alert('Error al subir la imagen');
         setIsSubmitting(false);
         return;
-      } 
+      }
       const payload = {
-        nombre_curso: data.course.name,
-        descripcion_curso: data.course.desc,
+        nombre_curso: data.name,
+        descripcion_curso: data.desc,
         portada_curso: imageResult,
-        fecha_inicio_curso: data.course.dateini,
-        fecha_cierre_curso: data.course.dateend,
+        fecha_inicio_curso: data.dateini,
+        fecha_cierre_curso: data.dateend,
         modulo_curso: parseInt(data.module),
         idioma_curso: parseInt(data.language),
         dificultad_curso: parseInt(data.level),
-        profesor_curso: 1, 
+        profesor_curso: 1,
       };
 
-      
       await axios.post(`${API_URL}/education/curso/create/`, payload);
-      alert('Curso creado exitosamente');
+      alert('Curso registrado exitosamente');
       window.location.reload();
     } catch (error) {
       console.error('Error al registrar:', error);
@@ -137,7 +132,7 @@ export default function FormCourse() {
                 />
                 <InputText
                   label="Nombre del curso"
-                  name="course.name"
+                  name="name"
                   className="w-full"
                   register={register}
                   validationRules={{
@@ -186,7 +181,7 @@ export default function FormCourse() {
               <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-9 mb-6">
                 <InputText
                   label="Fecha de inicio"
-                  name="course.dateini"
+                  name="dateini"
                   type="date"
                   className="w-full"
                   register={register}
@@ -206,7 +201,7 @@ export default function FormCourse() {
                 />
                 <InputText
                   label="Fecha de cierre"
-                  name="course.dateend"
+                  name="dateend"
                   type="date"
                   className="w-full"
                   register={register}
@@ -228,7 +223,7 @@ export default function FormCourse() {
 
               <TextArea
                 label="Descripción"
-                name="course.desc"
+                name="desc"
                 className="w-full"
                 register={register}
                 validationRules={{
