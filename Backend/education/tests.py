@@ -86,7 +86,7 @@ class DepartamentoModelTest(EducationModelsTest):
         self.assertIsNotNone(departamento.id_departamento)
         self.assertEqual(departamento.nombre_departamento, "Cocha_Test")
         self.assertEqual(departamento.nombre_corto, "CBAT")
-        self.assertEqual(str(departamento), "Cochabamba")
+        self.assertEqual(str(departamento), "Cocha_Test")
 
 class ProvinciaModelTest(EducationModelsTest):
     def test_create_provincia_successfully(self):
@@ -126,7 +126,46 @@ class DificultadCursoModelTest(EducationModelsTest):
 
 class TipoRecursoModelTest(EducationModelsTest):
     def test_create_tipo_recurso_successfully(self):
-        tipo = TipoRecurso.objects.create(tipo_recurso="PDF")
+        tipo = TipoRecurso.objects.create(tipo_recurso="PeDF")
         self.assertIsNotNone(tipo.id_tipo_recurso)
-        self.assertEqual(tipo.tipo_recurso, "PDF")
-        self.assertEqual(str(tipo), "PDF")
+        self.assertEqual(tipo.tipo_recurso, "PeDF")
+        self.assertEqual(str(tipo), "PeDF")
+class InstitucionModelTest(EducationModelsTest):
+    def test_create_institucion_successfully(self):
+        institucion = Institucion.objects.create(
+            admin_id=self.admin,
+            nombre_institucion="Universidad Ejemplo",
+            codigo_institucion="UE-001",
+            direccion="Calle Falsa 123",
+            email_institucion="info@uejemplo.com",
+            provincia=self.provincia,
+            nivel_institucion=self.nivel_educativo
+        )
+        self.assertIsNotNone(institucion.id_institucion)
+        self.assertEqual(institucion.nombre_institucion, "Universidad Ejemplo")
+        self.assertEqual(institucion.codigo_institucion, "UE-001")
+        self.assertEqual(institucion.admin_id, self.admin)
+        self.assertEqual(str(institucion), "Universidad Ejemplo")
+
+    def test_create_institucion_with_duplicate_codigo(self):
+        Institucion.objects.create(
+            admin_id=self.admin,
+            nombre_institucion="Colegio Duplicado",
+            codigo_institucion="CD-001",
+            direccion="Av. Siempre Viva 456",
+            email_institucion="colegio@duplicado.com",
+            provincia=self.provincia,
+            nivel_institucion=self.nivel_educativo
+        )
+
+        with self.assertRaises(IntegrityError):
+            Institucion.objects.create(
+                admin_id=self.admin,
+                nombre_institucion="Colegio Duplicado 2",
+                codigo_institucion="CD-001", # dato duplicado
+                direccion="Otra direccion",
+                email_institucion="colegio2@duplicado.com",
+                provincia=self.provincia,
+                nivel_institucion=self.nivel_educativo
+            )
+        self.assertEqual(Institucion.objects.count(), 1)
