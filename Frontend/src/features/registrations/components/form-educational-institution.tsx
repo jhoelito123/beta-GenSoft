@@ -42,7 +42,7 @@ export default function FormEducationalInstitution() {
   const [provincias, setProvincias] = useState<{ id: string; nombre: string }[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const { data: rawDepartamentosData } = useFetchData<any[]>(`${API_URL}api/education/departamentos`);
+  const { data: rawDepartamentosData } = useFetchData<any[]>(`${API_URL}/education/departamentos`);
 
   const departamentos =
     rawDepartamentosData?.map((d) => ({
@@ -55,7 +55,7 @@ export default function FormEducationalInstitution() {
       if (departamentoSeleccionado) {
         try {
           const response = await axios.get(
-            `${API_URL}api/education/departamentos/${departamentoSeleccionado}/provincias/`
+            `${API_URL}/education/departamentos/${departamentoSeleccionado}/provincias/`
           );
           const provinciasData = response.data.map((p: any) => ({
             id: p.id_provincia.toString(),
@@ -78,7 +78,7 @@ export default function FormEducationalInstitution() {
     setValue('provincia', '');
   }, [departamentoSeleccionado, setValue]);
 
-  const { data: rawNivelesData } = useFetchData<any[]>(`${API_URL}api/education/nivel-educativo/`);
+  const { data: rawNivelesData } = useFetchData<any[]>(`${API_URL}/education/nivel-educativo/`);
 
   const niveles =
     rawNivelesData?.map((n) => ({
@@ -100,7 +100,7 @@ export default function FormEducationalInstitution() {
 
     setLoading(true);
     try {
-      await axios.post(`${API_URL}api/education/instituciones/`, payload);
+      await axios.post(`${API_URL}/education/instituciones/`, payload);
       alert('Institución registrada con éxito');
       reset();
     } catch (error: any) {
@@ -255,6 +255,7 @@ export default function FormEducationalInstitution() {
                 label='Registrar'
                 variantColor="variant1"
                 disabled={loading}
+                loading={loading}
               />
             </div>
           </div>

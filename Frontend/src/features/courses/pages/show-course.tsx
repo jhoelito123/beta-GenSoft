@@ -8,7 +8,7 @@ const ShowCoursePage = () => {
         university="Universidad Mayor de San Simón"
         language="Español"
         level="Intermedio"
-        imageUrl="/img/python-course.png"
+        imageUrl="https://w0.peakpx.com/wallpaper/658/609/HD-wallpaper-python-glitter-logo-programming-language-grid-metal-background-python-creative-programming-language-signs-python-logo.jpg"
         description="Bienvenido al curso 'Introducción a Python'..."
         duration="70"
         practices={5}
