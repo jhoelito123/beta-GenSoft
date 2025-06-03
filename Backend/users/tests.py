@@ -4,7 +4,7 @@ from django.db import IntegrityError
 from datetime import timedelta
 from django.utils import timezone
 
-from models import Usuario, Admin, Estudiante, Docente
+from users.models import Usuario, Admin, Estudiante, Docente
 
 class UsuarioModelTest(TestCase):
 
@@ -21,7 +21,7 @@ class UsuarioModelTest(TestCase):
         user = Usuario.objects.create(**self.user_data)
         self.assertEqual(Usuario.objects.count(), 1)
         self.assertEqual(user.username_user, 'testuser')
-        self.assertEqual(user.email_user, 'test@example.com')
+        self.assertEqual(user.email_user, 'correito@example.com')
         self.assertTrue(user.is_active)
         self.assertIsNotNone(user.date_joined)
         self.assertIsNone(user.last_login)
@@ -34,7 +34,7 @@ class UsuarioModelTest(TestCase):
             Usuario.objects.create(
                 username_user='anotheruser',
                 password_user='anotherpass',
-                email_user='test@example.com',
+                email_user=self.user_data['email_user'],
                 is_active=True
             )
         self.assertEqual(Usuario.objects.count(), 1) 
@@ -150,7 +150,7 @@ class DocenteModelTest(TestCase):
         #test positivo: creación de docente
         docente = Docente.objects.create(**self.docente_data)
         self.assertEqual(Docente.objects.count(), 1)
-        self.assertEqual(docente.nombre_docente, 'Ana')
+        self.assertEqual(docente.nombre_docente, 'Richard')
         self.assertEqual(docente.ci_docente, '7654321')
         self.assertEqual(docente.telefono_docente, 78901234)
 
