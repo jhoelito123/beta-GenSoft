@@ -129,3 +129,48 @@ class EstudianteModelTest(TestCase):
         with self.assertRaises(ValidationError):
             estudiante_obj.full_clean()
 
+
+class DocenteModelTest(TestCase):
+    # Tests para el modelo Docente.
+    def setUp(self):
+        self.user = Usuario.objects.create(
+            username_user='teacheruser',
+            password_user='teacherpass',
+            email_user='teacher@example.com'
+        )
+        self.docente_data = {
+            'user_id': self.user,
+            'nombre_docente': 'Richard',
+            'apellidos_docente': 'Ayoroa',
+            'ci_docente': '7654321',
+            'telefono_docente': 78901234
+        }
+
+    def test_create_docente_successfully(self):
+        #test positivo: creación de docente
+        docente = Docente.objects.create(**self.docente_data)
+        self.assertEqual(Docente.objects.count(), 1)
+        self.assertEqual(docente.nombre_docente, 'Ana')
+        self.assertEqual(docente.ci_docente, '7654321')
+        self.assertEqual(docente.telefono_docente, 78901234)
+
+    def test_create_docente_with_duplicate_ci(self):
+        #test negativo: CI duplicado
+        Docente.objects.create(**self.docente_data) # Primer docente
+        
+        with self.assertRaises(IntegrityError):
+            Docente.objects.create(
+                user_id=Usuario.objects.create(username_user='another_teacher', password_user='pass', email_user='another_t@example.com'),
+                nombre_docente='Pedro',
+                apellidos_docente='Ramirez',
+                ci_docente='7654321', # CI duplicado
+                telefono_docente=65432109
+            )
+        self.assertEqual(Docente.objects.count(), 1)
+
+    def test_telefono_docente_is_integer(self):
+        #test de que telefono_docente es un entero
+        docente = Docente.objects.create(**self.docente_data)
+        self.assertIsInstance(docente.telefono_docente, int)
+        self.assertEqual(docente.telefono_docente, 78901234)
+    
