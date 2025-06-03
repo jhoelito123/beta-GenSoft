@@ -83,74 +83,49 @@ class AdminModelTest(TestCase):
         self.user.delete()
         self.assertEqual(Admin.objects.count(), 0) # El admin debería haberse eliminado
 
-
-    """
-    Tests para el modelo Docente.
-    """
-
+class EstudianteModelTest(TestCase):
+    # Tests para el modelo Estudiante.
     def setUp(self):
         self.user = Usuario.objects.create(
-            username_user='teacheruser',
-            password_user='teacherpass',
-            email_user='teacher@example.com'
+            username_user='studentuser',
+            password_user='studentpass',
+            email_user='student@example.com'
         )
-        self.docente_data = {
+        self.estudiante_data = {
             'user_id': self.user,
-            'nombre_docente': 'Ana',
-            'apellidos_docente': 'Lopez',
-            'ci_docente': '7654321',
-            'telefono_docente': 78901234
+            'nombre_estudiante': 'Juan',
+            'apellidos_estudiante': 'Perez',
+            'ci_estudiante': '1234567'
         }
 
-    def test_create_docente_successfully(self):
-        """
-        Verifica que se puede crear un docente exitosamente.
-        """
-        docente = Docente.objects.create(**self.docente_data)
-        self.assertEqual(Docente.objects.count(), 1)
-        self.assertEqual(docente.nombre_docente, 'Ana')
-        self.assertEqual(docente.ci_docente, '7654321')
-        self.assertEqual(docente.telefono_docente, 78901234)
+    def test_create_estudiante_successfully(self):
+        #test positivo: creación de estudiante
+        estudiante = Estudiante.objects.create(**self.estudiante_data)
+        self.assertEqual(Estudiante.objects.count(), 1)
+        self.assertEqual(estudiante.nombre_estudiante, 'Juan')
+        self.assertEqual(estudiante.ci_estudiante, '1234567')
 
-    def test_create_docente_with_duplicate_ci(self):
-        """
-        Verifica que no se puede crear un docente con CI duplicado (unique=True).
-        """
-        Docente.objects.create(**self.docente_data) # Primer docente
+    def test_create_estudiante_with_duplicate_ci(self):
+        #test negativo: CI duplicado
+        Estudiante.objects.create(**self.estudiante_data) # Primer estudiante
         
         with self.assertRaises(IntegrityError):
-            Docente.objects.create(
-                user_id=Usuario.objects.create(username_user='another_teacher', password_user='pass', email_user='another_t@example.com'),
-                nombre_docente='Pedro',
-                apellidos_docente='Ramirez',
-                ci_docente='7654321', # CI duplicado
-                telefono_docente=65432109
+            Estudiante.objects.create(
+                user_id=Usuario.objects.create(username_user='another_student', password_user='pass', email_user='another@example.com'),
+                nombre_estudiante='Maria',
+                apellidos_estudiante='Gomez',
+                ci_estudiante='1234567' # CI duplicado
             )
-        self.assertEqual(Docente.objects.count(), 1)
+        self.assertEqual(Estudiante.objects.count(), 1)
 
-    def test_docente_str_representation(self):
-        """
-        Verifica el método __str__ del modelo Docente.
-        """
-        docente = Docente.objects.create(**self.docente_data)
-        self.assertEqual(str(docente), 'Ana Lopez')
 
-    def test_telefono_docente_is_integer(self):
-        """
-        Verifica que el campo telefono_docente acepte enteros.
-        """
-        docente = Docente.objects.create(**self.docente_data)
-        self.assertIsInstance(docente.telefono_docente, int)
-        self.assertEqual(docente.telefono_docente, 78901234)
-    
     def test_ci_max_length_validation(self):
-        """
-        Verifica la validación de longitud máxima para ci_docente.
-        """
+        #longitud máxima del CI
         invalid_ci = '1' * 10 # 10 caracteres, max_length es 9
-        docente_data = self.docente_data.copy()
-        docente_data['ci_docente'] = invalid_ci
+        estudiante_data = self.estudiante_data.copy()
+        estudiante_data['ci_estudiante'] = invalid_ci
 
-        docente_obj = Docente(**docente_data)
+        estudiante_obj = Estudiante(**estudiante_data)
         with self.assertRaises(ValidationError):
-            docente_obj.full_clean()
+            estudiante_obj.full_clean()
+
