@@ -11,4 +11,6 @@ export interface ButtonProps {
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
   className?: string;
+  loading?: boolean;
+  loadingText?: string;
 }

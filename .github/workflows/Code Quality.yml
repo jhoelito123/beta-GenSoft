@@ -1,0 +1,47 @@
+name: Code Quality
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          cd Backend
+          pip install flake8 black isort mypy
+          pip install -r requirements.txt
+
+      - name: Run Flake8
+        run: |
+          cd Backend
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+      - name: Run Black
+        run: |
+          cd Backend
+          black . --check
+
+      - name: Run isort
+        run: |
+          cd Backend
+          isort . --check-only
+
+      - name: Run mypy
+        run: |
+          cd Backend
+          mypy .
