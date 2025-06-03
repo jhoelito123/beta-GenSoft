@@ -9,10 +9,10 @@ class UsuarioSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'password_user': {'write_only': True, 'required': True}
         }
-
-    def create(self, validated_data):
-        validated_data['password_user'] = make_password(validated_data['password_user'])
-        return super().create(validated_data)
+    
+    def create(self, data):
+        data['password_user'] = make_password(data['password_user'])
+        return super().create(data)
 
 class AdminCreateSerializer(serializers.ModelSerializer):
     # Aquí anidamos el UsuarioSerializer y le decimos que su fuente es el campo 'user_id' del modelo Admin
