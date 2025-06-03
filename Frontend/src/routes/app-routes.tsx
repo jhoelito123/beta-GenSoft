@@ -5,6 +5,7 @@ import RegisterInstPage from '../features/registrations/pages/register-education
 import { RegisterCoursePage } from '../features/courses/pages/register-course';
 import RegisterTeacherPage from '../features/registrations/pages/register-teacher';
 import { RegisterSectionCoursePage } from '../features/courses/pages/register-section-course';
+import CoursesPage from '../features/courses/pages/courses';
 
 export default function AppRoutes() {
   return (
@@ -22,6 +23,7 @@ export default function AppRoutes() {
             path="/register-section-course"
             element={<RegisterSectionCoursePage />}
           />
+          <Route path="/course" element={<CoursesPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
