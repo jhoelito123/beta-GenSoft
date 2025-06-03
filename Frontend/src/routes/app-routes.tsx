@@ -6,6 +6,7 @@ import { RegisterCoursePage } from '../features/courses/pages/register-course';
 import RegisterTeacherPage from '../features/registrations/pages/register-teacher';
 import { RegisterSectionCoursePage } from '../features/courses/pages/register-section-course';
 import ShowCoursePage from '../features/courses/pages/show-course';
+import Ejecutor from '../TestExecute';
 
 export default function AppRoutes() {
   return (
@@ -24,6 +25,7 @@ export default function AppRoutes() {
             element={<RegisterSectionCoursePage />}
           />
           <Route path="/show-course" element={<ShowCoursePage />} />
+          <Route path="/code-editor" element={<Ejecutor />} />
         </Route>
       </Routes>
     </BrowserRouter>
