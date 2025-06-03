@@ -27,7 +27,7 @@ export default function CardCourse({
   quizz,
 }: CardCourseProps) {
   return (
-    <div className="bg-white rounded-2xl shadow-md overflow-hidden w-[360px] h-80">
+    <div className="bg-white rounded-2xl shadow-md overflow-hidden w-[360px] h-[340px]">
       <div className="relative">
         <img src={imagen} alt={titulo} className="h-40 w-full object-cover" />
         <span className="absolute top-2 right-2 bg-emerald-500 text-white subtitle-sm px-4 py-1 rounded-lg">
@@ -35,7 +35,9 @@ export default function CardCourse({
         </span>
       </div>
       <div className="p-4 space-y-2">
-        <h3 className="subtitle-lg text-slate-900">{titulo}</h3>
+        <h3 className="subtitle-lg text-slate-900">
+          {titulo.length > 60 ? titulo.slice(0, 60) + '...' : titulo}
+        </h3>
         <p className="text-sm text-blue-500 font-medium">{universidad}</p>
         <div className="flex items-center space-x-1">
           <StarRating rating={4} />
@@ -51,11 +53,11 @@ export default function CardCourse({
             <span>{cursos} cursos</span>
           </div>
           <div className="flex items-center gap-1 hover:text-emerald-600 cursor-pointer">
-            <IconCode />
+            <IconCode className="w-5 h-5" />
             <span>{practicas} prácticas</span>
           </div>
           <div className="flex items-center gap-1 hover:text-emerald-600 cursor-pointer">
-            <IconQuizz />
+            <IconQuizz className="w-5 h-5" />
             <span>{quizz} quizzez</span>
           </div>
         </div>
