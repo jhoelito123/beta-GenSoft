@@ -1,4 +1,4 @@
-import { useForm, useWatch } from 'react-hook-form';
+import { FieldError, useForm, useWatch } from 'react-hook-form';
 import { InputText } from '../../../components/ui/input';
 import { Button } from '../../../components';
 import { Dropdown } from '../../../components/ui/dropdown';
@@ -7,12 +7,17 @@ import { UploadCover } from '../../../components/ui/upload-cover';
 import { useEffect, useState } from 'react';
 import { useFetchData } from '../../../hooks/use-fetch-data';
 import { API_URL } from '../../../config/api-config';
-import { useNavigate } from 'react-router';
 import axios from 'axios';
+import { useCloudinaryUpload } from '../../../hooks/use-cloudinary-upload';
 interface FormData {
   module: string;
   level: string;
   language: string;
+  name: string;
+  desc: string;
+  dateini: string;
+  dateend: string;
+  image: FileList | null;
 }
 
 export default function FormCourse() {
@@ -21,6 +26,7 @@ export default function FormCourse() {
     handleSubmit,
     control,
     trigger,
+    setValue,
     formState: { errors, isValid },
   } = useForm<FormData>({
     mode: 'onChange',
@@ -28,10 +34,15 @@ export default function FormCourse() {
       module: '',
       level: '',
       language: '',
+      name: '',
+      desc: '',
+      dateini: '',
+      dateend: '',
+      image: null,
     },
   });
-  const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { uploadFile } = useCloudinaryUpload();
 
   const { data: modules } = useFetchData<
     { id_modulo: number; nombre_modulo: string }[]
@@ -45,35 +56,46 @@ export default function FormCourse() {
     { id_idioma: number; idioma: string }[]
   >(`${API_URL}/education/idiomas`);
 
-  const dateIni = useWatch({ control, name: 'course.dateini' });
-  const dateEnd = useWatch({ control, name: 'course.dateend' });
-
+  const dateIni = useWatch({ control, name: 'dateini' });
+  const dateEnd = useWatch({ control, name: 'dateend' });
   useEffect(() => {
     if (dateEnd) {
-      trigger('course.dateend');
+      trigger('dateend');
     }
-  }, [dateIni]);
-
-  const onSubmit = async (data: any) => {
-    const payload = {
-      nombre_curso: data.course?.name || '',
-      profesor_curso: 1,
-      descripcion_curso: data.course?.desc || '',
-      portada_curso: data.image || '',
-      fecha_inicio_curso: data.course?.dateini || '',
-      fecha_cierre_curso: data.course?.dateend || '',
-      modulo_curso: parseInt(data.module),
-      idioma_curso: parseInt(data.language),
-      dificultad_curso: parseInt(data.level),
-    };
-    setIsSubmitting(true);
-
+  }, [dateIni, dateEnd, trigger]);
+  const onSubmit = async (data: FormData) => {
     try {
-      await axios.post(`${API_URL}/education/curso/create`, payload);
-      alert('Curso creado exitosamente');
+      setIsSubmitting(true);
+
+      if (!data.image || data.image.length === 0) {
+        alert('Por favor selecciona una imagen');
+        setIsSubmitting(false);
+        return;
+      }
+      const imageResult = await uploadFile(data.image[0]);
+
+      if (!imageResult) {
+        alert('Error al subir la imagen');
+        setIsSubmitting(false);
+        return;
+      }
+      const payload = {
+        nombre_curso: data.name,
+        descripcion_curso: data.desc,
+        portada_curso: imageResult,
+        fecha_inicio_curso: data.dateini,
+        fecha_cierre_curso: data.dateend,
+        modulo_curso: parseInt(data.module),
+        idioma_curso: parseInt(data.language),
+        dificultad_curso: parseInt(data.level),
+        profesor_curso: 1,
+      };
+
+      await axios.post(`${API_URL}/education/curso/create/`, payload);
+      alert('Curso registrado exitosamente');
       window.location.reload();
     } catch (error) {
-      console.error('Error al registrar :', error);
+      console.error('Error al registrar:', error);
       alert('Error al registrar el curso');
     } finally {
       setIsSubmitting(false);
@@ -93,6 +115,7 @@ export default function FormCourse() {
           <div className="flex space-x-9">
             <div className="w-9/12">
               <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-9 mb-6">
+                {' '}
                 <Dropdown
                   name="module"
                   label="Módulo"
@@ -109,7 +132,7 @@ export default function FormCourse() {
                 />
                 <InputText
                   label="Nombre del curso"
-                  name="course.name"
+                  name="name"
                   className="w-full"
                   register={register}
                   validationRules={{
@@ -125,6 +148,7 @@ export default function FormCourse() {
                 />
               </div>
               <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-9 mb-6">
+                {' '}
                 <Dropdown
                   name="level"
                   label="Nivel"
@@ -157,7 +181,7 @@ export default function FormCourse() {
               <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-9 mb-6">
                 <InputText
                   label="Fecha de inicio"
-                  name="course.dateini"
+                  name="dateini"
                   type="date"
                   className="w-full"
                   register={register}
@@ -177,7 +201,7 @@ export default function FormCourse() {
                 />
                 <InputText
                   label="Fecha de cierre"
-                  name="course.dateend"
+                  name="dateend"
                   type="date"
                   className="w-full"
                   register={register}
@@ -199,7 +223,7 @@ export default function FormCourse() {
 
               <TextArea
                 label="Descripción"
-                name="course.desc"
+                name="desc"
                 className="w-full"
                 register={register}
                 validationRules={{
@@ -213,14 +237,23 @@ export default function FormCourse() {
                     message:
                       'La descripción no puede exceder los 500 caracteres',
                   },
-                  validate: (value) =>
+                  validate: (value: string) =>
                     value.trim().length > 0 ||
                     'La descripción no puede estar vacía',
                 }}
                 errors={errors}
               />
             </div>
-            <UploadCover name="image" register={register} />
+            <UploadCover
+              name="image"
+              register={register}
+              error={errors.image as FieldError}
+              onChange={(e) => {
+                if (e.target.files && e.target.files.length > 0) {
+                  setValue('image', e.target.files, { shouldValidate: true });
+                }
+              }}
+            />
           </div>
 
           <div className="flex flex-col-reverse md:flex-row md:justify-between md:space-x-5">
@@ -233,9 +266,7 @@ export default function FormCourse() {
               type="submit"
               label="Registrar"
               disabled={!isValid || isSubmitting}
-              variantColor={
-                !isValid || isSubmitting ? 'variantDesactivate' : 'variant1'
-              }
+              variantColor={isSubmitting ? 'variantDesactivate' : 'variant1'}
             />
           </div>
         </form>

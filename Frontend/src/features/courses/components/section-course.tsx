@@ -10,7 +10,7 @@ export const CourseSectionsList: React.FC<Props> = ({ syllabus }) => {
   return (
     <div className="mt-10">
       <h2 className="text-xl font-semibold text-slate-900 mb-4">Secciones</h2>
-      <div className="grid grid-cols-1  gap-4">
+      <div className="grid grid-cols-1 gap-4">
         {syllabus.map((item, i) => (
           <div
             key={i}

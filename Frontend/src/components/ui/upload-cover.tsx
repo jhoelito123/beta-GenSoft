@@ -1,35 +1,62 @@
 import { useRef, useState, useCallback } from 'react';
-import { UseFormRegister, FieldValues, FieldError } from 'react-hook-form';
+import {
+  UseFormRegister,
+  FieldValues,
+  FieldError,
+  Path,
+} from 'react-hook-form';
 
 interface UploadCoverProps<T extends FieldValues> {
-  name: keyof T;
+  name: Path<T>;
   register: UseFormRegister<T>;
   error?: FieldError;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
+
+const VALID_IMAGE_TYPES = [
+  'image/jpeg',
+  'image/png',
+  'image/gif',
+  'image/webp',
+  'image/svg+xml',
+];
+
+const VALID_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'];
+
+const validateImageFile = (file: File): boolean => {
+  const fileExtension = file.name.split('.').pop()?.toLowerCase();
+  return (
+    VALID_IMAGE_TYPES.includes(file.type) ||
+    VALID_EXTENSIONS.includes(fileExtension || '')
+  );
+};
 
 export const UploadCover = <T extends FieldValues>({
   name,
   register,
   error,
+  onChange,
 }: UploadCoverProps<T>) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
-  const [fileError, setFileError] = useState<string | null>(null);
 
   const handleFile = (file: File | null) => {
-    if (!file) return;
-
-    if (!file.type.startsWith('image/')) {
-      setFileError('Solo se permiten archivos de imagen (JPG, PNG, etc.)');
+    if (!file) {
       setPreview(null);
       return;
     }
 
-    setFileError(null);
+    if (!validateImageFile(file)) {
+      setPreview(null);
+      return;
+    }
 
     const reader = new FileReader();
     reader.onloadend = () => {
       setPreview(reader.result as string);
+    };
+    reader.onerror = () => {
+      setPreview(null);
     };
     reader.readAsDataURL(file);
   };
@@ -37,19 +64,22 @@ export const UploadCover = <T extends FieldValues>({
   const handleDrop = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
-    if (fileInputRef.current) {
+    if (file && fileInputRef.current) {
       const dataTransfer = new DataTransfer();
       dataTransfer.items.add(file);
       fileInputRef.current.files = dataTransfer.files;
+      handleFile(file);
+
+      const event = new Event('change', { bubbles: true });
+      fileInputRef.current.dispatchEvent(event);
     }
-    handleFile(file);
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
     handleFile(file);
+    onChange?.(e);
   };
-
   const openFileDialog = () => {
     fileInputRef.current?.click();
   };
@@ -66,7 +96,7 @@ export const UploadCover = <T extends FieldValues>({
         className={`w-full h-64 border-[1px] rounded-md cursor-pointer 
         flex items-center justify-center relative overflow-hidden bg-neutral-50
         hover:bg-neutral-100 transition ${
-          fileError || error ? 'border-red-400' : 'border-slate-900'
+          error ? 'border-red-400' : 'border-slate-900'
         }`}
       >
         {preview ? (
@@ -82,26 +112,27 @@ export const UploadCover = <T extends FieldValues>({
         )}
         <input
           type="file"
-          accept="image/*"
+          accept="image/jpeg,image/png,image/gif,image/webp,image/svg+xml"
           {...register(name, {
-            validate: (fileList) =>
-              fileList?.[0]?.type.startsWith('image/') ||
-              'Solo se permiten archivos de imagen (JPG, PNG, etc.)',
+            required: 'Por favor selecciona una imagen',
+            validate: (fileList: FileList) => {
+              if (!fileList || fileList.length === 0) {
+                return 'Por favor selecciona una imagen';
+              }
+
+              const file = fileList[0];
+              if (!validateImageFile(file)) {
+                return 'Solo se permiten archivos de imagen (JPG, PNG, GIF, WEBP, SVG)';
+              }
+
+              return true;
+            },
           })}
-          ref={(e) => {
-            register(name).ref(e);
-            fileInputRef.current = e;
-          }}
+          ref={fileInputRef}
           onChange={handleInputChange}
           className="hidden"
         />
       </div>
-
-      {fileError && (
-        <span className="text-red-400 subtitle-sm text-wrap text-center">
-          {fileError}
-        </span>
-      )}
 
       {error && (
         <span className="text-red-400 subtitle-sm text-wrap text-center">
