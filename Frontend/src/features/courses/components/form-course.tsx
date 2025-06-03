@@ -4,19 +4,38 @@ import { Button } from '../../../components';
 import { Dropdown } from '../../../components/ui/dropdown';
 import { TextArea } from '../../../components/ui/textarea';
 import { UploadCover } from '../../../components/ui/upload-cover';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useFetchData } from '../../../hooks/use-fetch-data';
 import { API_URL } from '../../../config/api-config';
+import { useNavigate } from 'react-router';
+import axios from 'axios';
+interface FormData {
+  module: string;
+  level: string;
+  language: string;
+}
+
 export default function FormCourse() {
   const {
     register,
-    setValue,
-    watch,
     handleSubmit,
     control,
     trigger,
     formState: { errors, isValid },
-  } = useForm({ mode: 'onChange' });
+  } = useForm<FormData>({
+    mode: 'onChange',
+    defaultValues: {
+      module: '',
+      level: '',
+      language: '',
+    },
+  });
+  const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const { data: modules } = useFetchData<
+    { id_modulo: number; nombre_modulo: string }[]
+  >(`${API_URL}/education/modulos`);
 
   const { data: levels } = useFetchData<
     { id_dificultad: number; dificultad_curso: string }[]
@@ -35,8 +54,30 @@ export default function FormCourse() {
     }
   }, [dateIni]);
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = async (data: any) => {
+    const payload = {
+      nombre_curso: data.course?.name || '',
+      profesor_curso: 1,
+      descripcion_curso: data.course?.desc || '',
+      portada_curso: data.image || '',
+      fecha_inicio_curso: data.course?.dateini || '',
+      fecha_cierre_curso: data.course?.dateend || '',
+      modulo_curso: parseInt(data.module),
+      idioma_curso: parseInt(data.language),
+      dificultad_curso: parseInt(data.level),
+    };
+    setIsSubmitting(true);
+
+    try {
+      await axios.post(`${API_URL}/education/curso/create`, payload);
+      alert('Curso creado exitosamente');
+      window.location.reload();
+    } catch (error) {
+      console.error('Error al registrar :', error);
+      alert('Error al registrar el curso');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -51,7 +92,21 @@ export default function FormCourse() {
           </h1>
           <div className="flex space-x-9">
             <div className="w-9/12">
-              <div className="grid grid-cols-1 gap-9 mb-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-9 mb-6">
+                <Dropdown
+                  name="module"
+                  label="Módulo"
+                  options={
+                    modules?.map((item) => ({
+                      id: item.id_modulo,
+                      nombre: item.nombre_modulo,
+                    })) || []
+                  }
+                  displayKey="nombre"
+                  valueKey="id"
+                  placeholder="Selecciona un módulo"
+                  register={register}
+                />
                 <InputText
                   label="Nombre del curso"
                   name="course.name"
@@ -71,7 +126,7 @@ export default function FormCourse() {
               </div>
               <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-9 mb-6">
                 <Dropdown
-                  name="course.level"
+                  name="level"
                   label="Nivel"
                   options={
                     levels?.map((item) => ({
@@ -85,7 +140,7 @@ export default function FormCourse() {
                   register={register}
                 />
                 <Dropdown
-                  name="course.language"
+                  name="language"
                   label="Idioma"
                   options={
                     languages?.map((item) => ({
@@ -111,7 +166,7 @@ export default function FormCourse() {
                     validate: (value: string) => {
                       const selectedDate = new Date(value);
                       const today = new Date();
-                      today.setHours(0, 0, 0, 0); // Ignorar la hora
+                      today.setHours(0, 0, 0, 0);
                       return (
                         selectedDate > today ||
                         'La fecha de inicio debe ser mayor a hoy'
@@ -129,7 +184,7 @@ export default function FormCourse() {
                   validationRules={{
                     required: 'La fecha de cierre es obligatoria',
                     validate: (value: string) => {
-                      if (!dateIni) return true; // aún no hay fecha de inicio
+                      if (!dateIni) return true;
                       const end = new Date(value);
                       const start = new Date(dateIni);
                       return (
@@ -177,11 +232,9 @@ export default function FormCourse() {
             <Button
               type="submit"
               label="Registrar"
-              disabled={!isValid || Object.keys(errors).length > 0}
+              disabled={!isValid || isSubmitting}
               variantColor={
-                !isValid || Object.keys(errors).length > 0
-                  ? 'variantDesactivate'
-                  : 'variant1'
+                !isValid || isSubmitting ? 'variantDesactivate' : 'variant1'
               }
             />
           </div>
