@@ -77,9 +77,9 @@ class Curso(models.Model):
     portada_curso = models.URLField(max_length=1000)
     fecha_inicio_curso = models.DateField()
     fecha_cierre_curso = models.DateField()
-    modulo_curso = models.ForeignKey(Modulo, on_delete=models.CASCADE)
-    idioma_curso = models.ForeignKey(Idioma, on_delete=models.CASCADE)
-    dificultad_curso = models.ForeignKey(DificultadCurso, on_delete=models.CASCADE)
+    modulo_curso = models.ForeignKey(Modulo, on_delete=models.SET_NULL, null=True, blank=True)
+    idioma_curso = models.ForeignKey(Idioma, on_delete=models.SET_NULL, null=True, blank=True)
+    dificultad_curso = models.ForeignKey(DificultadCurso, on_delete=models.SET_NULL, null=True, blank=True)
     
     def __str__(self):
         return self.nombre_curso
@@ -90,16 +90,7 @@ class Curso(models.Model):
         if self.duracion_curso != total_duration:
             self.duracion_curso = total_duration
             self.save(update_fields=['duracion_curso'])
-
-class Seccion(models.Model):
-    id_seccion = models.AutoField(primary_key=True)
-    nombre_seccion = models.CharField(max_length=100)
-    descripcion_seccion = models.TextField()
-    seccion_del_curso = models.ForeignKey(Curso, on_delete=models.CASCADE, related_name='secciones')
-    duracion_seccion = models.DurationField(default=timedelta(minutes=0))
     
-    def __str__(self):
-        return self.nombre_seccion
 class TipoRecurso(models.Model):
     id_tipo_recurso = models.AutoField(primary_key=True)
     tipo_recurso = models.CharField(max_length=30)
@@ -109,15 +100,26 @@ class TipoRecurso(models.Model):
     
 class Recurso(models.Model):
     id_recurso = models.AutoField(primary_key=True)
-    nombre_recurso = models.CharField(max_length=30)
-    # url_recurso = models.URLField(max_length=1000)
-    url_recurso = models.CharField(max_length=1000)
-    archivo_recurso = models.FileField(upload_to='recursos/', null=True, blank=True)
+    nombre_recurso = models.CharField(max_length=100)
+    url_recurso = models.URLField(max_length=1000)
     texto_recurso = models.TextField(null = True, blank=True)
-    tipo_recurso = models.ForeignKey(TipoRecurso, on_delete=models.CASCADE)
+    tipo_recurso = models.ForeignKey(TipoRecurso, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.nombre_recurso
+
+class Seccion(models.Model):
+    id_seccion = models.AutoField(primary_key=True)
+    nombre_seccion = models.CharField(max_length=100)
+    descripcion_seccion = models.TextField()
+    seccion_del_curso = models.ForeignKey(Curso, on_delete=models.CASCADE, related_name='secciones')
+    duracion_seccion = models.DurationField(default=timedelta(minutes=0))
+    video_seccion = models.ForeignKey(Recurso, on_delete=models.SET_NULL, null=True, blank=True, related_name='video')
+    contenido_seccion = models.ForeignKey(Recurso, on_delete=models.SET_NULL, null=True, blank=True, related_name='contenido')
+    instruccion_ejecutor_seccion = models.ForeignKey(Recurso, on_delete=models.SET_NULL, null=True, blank=True, related_name='instruccion')
+    
+    def __str__(self):
+        return self.nombre_seccion
 
 @receiver(post_save, sender=Seccion)
 def update_curso_duration_on_seccion_save(sender, instance, **kwargs):
@@ -128,3 +130,4 @@ def update_curso_duration_on_seccion_save(sender, instance, **kwargs):
 def update_curso_duration_on_seccion_delete(sender, instance, **kwargs):
     if instance.seccion_del_curso:
         instance.seccion_del_curso.calcular_y_actualizar_duracion()
+        
