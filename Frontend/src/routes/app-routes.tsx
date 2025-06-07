@@ -8,13 +8,15 @@ import { RegisterSectionCoursePage } from '../features/courses/pages/register-se
 import CoursesPage from '../features/courses/pages/courses';
 import ShowCoursePage from '../features/courses/pages/show-course';
 import Ejecutor from '../TestExecute';
+import MainLayout from '../features/landing/landing-page';
 
 export default function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<NavbarLayout />}>
-          <Route index element={<Home />} />
+          {/* <Route index element={<Home />} /> */}
+          <Route index element={<MainLayout/>} />
           <Route
             path="/register-inst-educational"
             element={<RegisterInstPage />}
