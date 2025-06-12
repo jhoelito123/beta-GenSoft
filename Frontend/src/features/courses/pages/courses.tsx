@@ -36,15 +36,16 @@ export default function CoursesPage() {
         {cursos?.map((curso) => (
           <CardCourse
             key={curso.id_curso}
-            nivel={mapDificultad(curso.dificultad_curso)}
-            imagen={curso.portada_curso}
-            titulo={curso.nombre_curso}
-            universidad="Universidad Andina"
+            level={mapDificultad(curso.dificultad_curso)}
+            image={curso.portada_curso}
+            title={curso.nombre_curso}
+            college="Universidad Andina"
             rating={curso.calificacion_curso}
-            votos={0}
-            cursos={1}
-            practicas={2}
-            quizz={3}
+            votes={0}
+            sections={1}
+            practices={2}
+            quizzez={3}
+            link={`/show-course/${curso.id_curso}`}
           />
         ))}
       </div>

@@ -40,11 +40,11 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
     <div className="flex flex-col h-full bg-gray-800 text-white p-6 rounded-lg shadow-xl border border-gray-700">
       <div className="flex justify-between items-center mb-6">
         <h2 className="subtitle-lg">Código ({language})</h2>
-         <Button
+        <Button
           onClick={onExecute}
           disabled={loading}
           loading={loading}
-          label="Ejecutar Código" 
+          label="Ejecutar Código"
           loadingText="Ejecutando..."
           variantColor="variant1"
           className="px-8 py-3 rounded-lg font-semibold"
@@ -52,7 +52,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
       </div>
 
       {/* Editor Config*/}
-      <div className="flex-grow min-h-[300px] mb-6 border border-gray-600 rounded-md overflow-hidden">
+      <div className="flex-grow min-h-64 mb-6 border border-gray-600 rounded-md overflow-hidden">
         <Editor
           height="100%"
           language={language}
@@ -67,8 +67,8 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
             wordWrap: 'on',
             scrollBeyondLastLine: false,
             padding: {
-                top: 15,
-                bottom: 15
+              top: 15,
+              bottom: 15,
             },
             lineHeight: 22,
           }}
@@ -78,8 +78,9 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
       {/* Output */}
       <div className="flex flex-col mt-auto bg-gray-900 p-4 rounded-md border border-gray-600">
         <h3 className="subtitle-md mb-2">Salida:</h3>
-        <pre className="body-md bg-gray-950 p-4 rounded-sm overflow-auto max-h-[180px] text-green-400">
-          {output || (loading ? 'Ejecutando...' : 'La salida aparecerá aquí.')} {/*Pendiente respuesta del backend*/} 
+        <pre className="body-md bg-gray-950 p-4 rounded-sm overflow-auto max-h-44 text-green-400">
+          {output || (loading ? 'Ejecutando...' : 'La salida aparecerá aquí.')}{' '}
+          {/*Pendiente respuesta del backend*/}
         </pre>
       </div>
     </div>
