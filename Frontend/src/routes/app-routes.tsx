@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router';
-import { Home } from '../components/ui/home';
+import { Home } from '../features/home/home';
 import NavbarLayout from '../layouts/navbar-layout';
 import RegisterInstPage from '../features/registrations/pages/register-educational-institution';
 import { RegisterCoursePage } from '../features/courses/pages/register-course';
@@ -8,6 +8,7 @@ import { RegisterSectionCoursePage } from '../features/courses/pages/register-se
 import CoursesPage from '../features/courses/pages/courses';
 import ShowCoursePage from '../features/courses/pages/show-course';
 import Ejecutor from '../TestExecute';
+import ShowSectionPage from '../features/courses/pages/show-section';
 
 export default function AppRoutes() {
   return (
@@ -26,7 +27,8 @@ export default function AppRoutes() {
             element={<RegisterSectionCoursePage />}
           />
           <Route path="/course" element={<CoursesPage />} />
-          <Route path="/show-course" element={<ShowCoursePage />} />
+          <Route path="/show-course/:id" element={<ShowCoursePage />} />
+          <Route path="/show-section" element={<ShowSectionPage />} />
           <Route path="/code-editor" element={<Ejecutor />} />
         </Route>
       </Routes>

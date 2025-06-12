@@ -1,33 +1,67 @@
+import { useFetchData } from '../../../hooks/use-fetch-data';
+import { API_URL } from '../../../config/api-config';
 import { CardShowCourse } from '../components/card-show-course';
+import { useParams } from 'react-router';
 
-const ShowCoursePage = () => {
+type Curso = {
+  id_curso: number;
+  nombre_curso: string;
+  calificacion_curso: number;
+  duracion_curso: string;
+  descripcion_curso: string;
+  portada_curso: string;
+  fecha_inicio_curso: string;
+  fecha_cierre_curso: string;
+  profesor_curso: number;
+  modulo_curso: number;
+  idioma_curso: number;
+  dificultad_curso: number;
+};
+
+export default function ShowCoursePage() {
+  const { id } = useParams();
+  const {
+    data: curso,
+    loading,
+    error,
+  } = useFetchData<Curso>(`${API_URL}/education/curso/${id}`);
+
+  if (loading) return <p className="p-4">Cargando curso...</p>;
+  if (error || !curso)
+    return <p className="p-4 text-red-500">Curso no encontrado</p>;
+
   return (
-    <div className="p-10  min-h-screen">
+    <div className="p-10 min-h-screen">
       <CardShowCourse
-        title="Introducción a Python"
-        university="Universidad Mayor de San Simón"
+        title={curso.nombre_curso}
+        university="Universidad Andina"
         language="Español"
-        level="Intermedio"
-        imageUrl="https://w0.peakpx.com/wallpaper/658/609/HD-wallpaper-python-glitter-logo-programming-language-grid-metal-background-python-creative-programming-language-signs-python-logo.jpg"
-        description="Bienvenido al curso 'Introducción a Python'..."
-        duration="70"
-        practices={5}
-        quizzes={2}
-        syllabus={[
-          'Variables',
-          'Estructura de datos',
-          'Funciones',
-          'Condicionales',
-        ]}
+        level={mapDificultad(curso.dificultad_curso)}
+        imageUrl={curso.portada_curso}
+        description={curso.descripcion_curso}
+        duration={curso.duracion_curso}
+        practices={2} // Puedes ajustar esto si lo tienes en la API
+        quizzes={3} // Puedes ajustar esto si lo tienes en la API
+        syllabus={['Sección 1', 'Sección 2', 'Sección 3']}
         tabs={{
-          general: `Bienvenido al curso 'Introducción a Python', un espacio diseñado para que te inicies en el mundo de la programación de manera clara, práctica y accesible. Python es uno de los lenguajes de programación más populares y versátiles en la actualidad. Su sintaxis sencilla y su gran comunidad lo convierten en una excelente elección para quienes están comenzando a programar...`,
+          general: curso.descripcion_curso,
           syllabus: '',
-          requirements:
-            'Conocimientos básicos de computación. Acceso a una computadora e internet.',
+          requirements: 'Requiere conocimientos básicos de computación',
         }}
       />
     </div>
   );
-};
+}
 
-export default ShowCoursePage;
+function mapDificultad(dificultad: number): string {
+  switch (dificultad) {
+    case 1:
+      return 'Básico';
+    case 2:
+      return 'Intermedio';
+    case 3:
+      return 'Avanzado';
+    default:
+      return 'Desconocido';
+  }
+}
