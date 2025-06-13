@@ -48,8 +48,12 @@ export default function Navbar({
         ]}
       />
       <IconBell />
-      <Button label="Iniciar sesión" variantColor="variant4" />
-      <Button label="Regístrate" variantColor="variant3" />
+        <Link to="/signin">
+          <Button label="Iniciar sesión" variantColor="variant4"/>
+        </Link>
+        <Link to="/signup">
+          <Button label="Regístrate" variantColor="variant3" />
+        </Link>
       <IconLanguage />
     </ul>
   );
