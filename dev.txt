@@ -83,41 +83,31 @@ src/
 
 ## Backend (Django)
 
-### Estructura de Carpetas (Domain-Driven Design)
+### Estructura de Carpetas (Standart convention Django)
 ```
 Backend/
-├── apps/              # Aplicaciones Django (por dominio)
-│   ├── users/         # Gestión de usuarios
-│   │   ├── models.py
-│   │   ├── views.py
-│   │   ├── serializers.py
-│   │   ├── urls.py
-│   │   └── tests/
-│   ├── products/      # Gestión de productos
-│   │   ├── models.py
-│   │   ├── views.py
-│   │   ├── serializers.py
-│   │   ├── urls.py
-│   │   └── tests/
-│   └── orders/        # Gestión de pedidos
-│       ├── models.py
-│       ├── views.py
-│       ├── serializers.py
-│       ├── urls.py
-│       └── tests/
-├── config/            # Configuración del proyecto
-│   ├── settings/
-│   │   ├── base.py
-│   │   ├── development.py
-│   │   └── production.py
+├── education/              # Aplicación 'education'
+│   ├── migrations/         # Migraciones de base de datos de la aplicación.
+│   ├── admin.py            # Configuraciones para el panel de administración de Django.
+│   ├── apps.py             # Configuración de la aplicación.
+│   ├── models.py           # Definición de modelos de datos
+│   ├── serializers.py      # Serializadores para API REST (DRF).
+│   ├── urls.py             # Definición de rutas específicas de la aplicación.
+│   ├── views.py            # Lógica de las vistas (API Endpoints).
+│   └── tests/ 
+├── Pystart/                # La carpeta principal de tu proyecto Django
+│   ├── __init__.py
+│   ├── asgi.py
+│   ├── settings.py         # Archivo de configuración principal
 │   ├── urls.py
 │   └── wsgi.py
-├── utils/             # Utilidades compartidas
-│   ├── permissions.py
-│   └── decorators.py
-└── tests/             # Tests de integración
-    ├── conftest.py
-    └── factories.py
+├── static/                 # Archivos estáticos del proyecto
+├── users/                  # Aplicación 'users'
+├── . . .
+├── venv/                   # Entorno virtual
+├── .gitignore
+├── manage.py               # Script de administración de Django
+└── requirements.txt  
 ```
 
 ### Convenciones de Nombrado
