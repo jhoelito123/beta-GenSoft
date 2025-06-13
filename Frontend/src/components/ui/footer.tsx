@@ -2,12 +2,11 @@ import { Link } from 'react-router';
 
 const Footer = () => {
   return (
-    <>
       <footer
-        className="wow fadeInUp relative z-10 bg-white pt-16 md:pt-20 lg:pt-24"
+        className="wow fadeInUp relative z-10 bg-white pt-16 md:pt-10 w-full"
         data-wow-delay=".1s"
       >
-        <div className="container">
+      <div className="w-full max-w-7xl mx-auto px-4">
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-2 md:px-4 md:w-1/2 lg:w-4/12 xl:w-5/12">
               <div className="mb-12 max-w-[360px] lg:mb-16">
@@ -28,8 +27,7 @@ const Footer = () => {
                   />
                 </Link>
                 <p className=" mb-9 text-base leading-relaxed text-body-color">
-                  Footer
-                  Integer lobortis.
+                  Proyecto GenSoft 1/2025
                 </p>
                 <div className="flex items-center">
                   <a
@@ -95,24 +93,47 @@ const Footer = () => {
             <div className="w-full px-4 sm:w-1/2 md:w-1/2 lg:w-2/12 xl:w-2/12">
               <div className="mb-12 lg:mb-16">
                 <h2 className="mb-10 text-xl font-bold text-black dark:text-white">
-                  Enlaces
+                  Nuestro equipo
                 </h2>
                 <ul>
-                  
                   <li>
                     <a
-                      href="/pricing"
+                      href="https://github.com/ivancidev"
                       className=" mb-4 inline-block text-base text-body-color duration-300 hover:text-primary dark:hover:text-primary"
                     >
-                      Precios
+                      ivancidev
                     </a>
                   </li>
                   <li>
                     <a
-                      href="/about"
+                      href="https://github.com/AndreaQuelali"
                       className=" mb-4 inline-block text-base text-body-color duration-300 hover:text-primary dark:hover:text-primary"
                     >
-                      About
+                      Aliz
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://github.com/jhoelito123"
+                      className=" mb-4 inline-block text-base text-body-color duration-300 hover:text-primary dark:hover:text-primary"
+                    >
+                      Jhoelito
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://github.com/bruvg07"
+                      className=" mb-4 inline-block text-base text-body-color duration-300 hover:text-primary dark:hover:text-primary"
+                    >
+                      bruvg07
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://github.com/DavidHuancaLedezma"
+                      className=" mb-4 inline-block text-base text-body-color duration-300 hover:text-primary dark:hover:text-primary"
+                    >
+                      David Huanca
                     </a>
                   </li>
                 </ul>
@@ -122,31 +143,39 @@ const Footer = () => {
             <div className="w-full px-4 sm:w-1/2 md:w-1/2 lg:w-2/12 xl:w-2/12">
               <div className="mb-12 lg:mb-16">
                 <h2 className="mb-10 text-xl font-bold text-black dark:text-white">
-                  Terms
+                   &emsp;
                 </h2>
                 <ul>
                   <li>
                     <a
-                      href="/"
+                      href="https://github.com/KraAlv"
                       className=" mb-4 inline-block text-base text-body-color duration-300 hover:text-primary dark:hover:text-primary"
                     >
-                      TOS
+                      KraAlv
                     </a>
                   </li>
                   <li>
                     <a
-                      href="/"
+                      href="https://github.com/andyortz"
                       className=" mb-4 inline-block text-base text-body-color duration-300 hover:text-primary dark:hover:text-primary"
                     >
-                      Privacy Policy
+                      andyortz
                     </a>
                   </li>
                   <li>
                     <a
-                      href="/"
+                      href="https://github.com/amodelpiano1"
                       className=" mb-4 inline-block text-base text-body-color duration-300 hover:text-primary dark:hover:text-primary"
                     >
-                      Refund Policy
+                      amodelpiano1
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://github.com/Criss6038"
+                      className=" mb-4 inline-block text-base text-body-color duration-300 hover:text-primary dark:hover:text-primary"
+                    >
+                      Criss6038
                     </a>
                   </li>
                 </ul>
@@ -156,7 +185,7 @@ const Footer = () => {
             <div className="w-full px-4 md:w-1/2 lg:w-4/12 xl:w-3/12">
               <div className="mb-12 lg:mb-16">
                 <h2 className="mb-10 text-xl font-bold text-black dark:text-white">
-                  Support & Help
+                  Soporte y Ayuda
                 </h2>
                 <ul>
                   <li>
@@ -164,7 +193,7 @@ const Footer = () => {
                       href="/contact"
                       className=" mb-4 inline-block text-base text-body-color duration-300 hover:text-primary dark:hover:text-primary"
                     >
-                      Open Support Ticket
+                      Números de contacto
                     </a>
                   </li>
                   <li>
@@ -172,7 +201,7 @@ const Footer = () => {
                       href="/"
                       className=" mb-4 inline-block text-base text-body-color duration-300 hover:text-primary dark:hover:text-primary"
                     >
-                      Terms of Use
+                      Terminos de uso
                     </a>
                   </li>
                   <li>
@@ -180,7 +209,7 @@ const Footer = () => {
                       href="/about"
                       className=" mb-4 inline-block text-base text-body-color duration-300 hover:text-primary dark:hover:text-primary"
                     >
-                      About
+                      Acerca de nosotros
                     </a>
                   </li>
                 </ul>
@@ -191,87 +220,14 @@ const Footer = () => {
           <div className="h-px w-full bg-gradient-to-r from-transparent via-[#D2D8E183] to-transparent dark:via-[#959CB183]"></div>
           <div className="py-8">
             <p className="text-center text-base text-body-color dark:text-white">
-              Joder cansa mucho waa{" "}
+              © Devmente (SoftCraft + TechMirai Group)
               <a href="/" rel="nofollow noopener">
-                Like Ramirez
+                
               </a>
             </p>
           </div>
         </div>
-        <div className="absolute right-0 top-14 z-[-1]">
-          <svg
-            width="55"
-            height="99"
-            viewBox="0 0 55 99"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle opacity="0.8" cx="49.5" cy="49.5" r="49.5" fill="#959CB1" />
-            <mask
-              id="mask0_94:899"
-              style={{ maskType: "alpha" }}
-              maskUnits="userSpaceOnUse"
-              x="0"
-              y="0"
-              width="99"
-              height="99"
-            >
-              <circle
-                opacity="0.8"
-                cx="49.5"
-                cy="49.5"
-                r="49.5"
-                fill="#4A6CF7"
-              />
-            </mask>
-            <g mask="url(#mask0_94:899)">
-              <circle
-                opacity="0.8"
-                cx="49.5"
-                cy="49.5"
-                r="49.5"
-                fill="url(#paint0_radial_94:899)"
-              />
-              <g opacity="0.8" filter="url(#filter0_f_94:899)">
-                <circle cx="53.8676" cy="26.2061" r="20.3824" fill="white" />
-              </g>
-            </g>
-            <defs>
-              <filter
-                id="filter0_f_94:899"
-                x="12.4852"
-                y="-15.1763"
-                width="82.7646"
-                height="82.7646"
-                filterUnits="userSpaceOnUse"
-                colorInterpolationFilters="sRGB"
-              >
-                <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                <feBlend
-                  mode="normal"
-                  in="SourceGraphic"
-                  in2="BackgroundImageFix"
-                  result="shape"
-                />
-                <feGaussianBlur
-                  stdDeviation="10.5"
-                  result="effect1_foregroundBlur_94:899"
-                />
-              </filter>
-              <radialGradient
-                id="paint0_radial_94:899"
-                cx="0"
-                cy="0"
-                r="1"
-                gradientUnits="userSpaceOnUse"
-                gradientTransform="translate(49.5 49.5) rotate(90) scale(53.1397)"
-              >
-                <stop stopOpacity="0.47" />
-                <stop offset="1" stopOpacity="0" />
-              </radialGradient>
-            </defs>
-          </svg>
-        </div>
+
         <div className="absolute bottom-24 left-0 z-[-1]">
           <svg
             width="79"
@@ -389,7 +345,6 @@ const Footer = () => {
           </svg>
         </div>
       </footer>
-    </>
   );
 };
 
