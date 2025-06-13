@@ -1,4 +1,4 @@
-import SectionTitle from "../Common/SectionTitle";
+import SectionTitle from "../SectionTitle";
 import SingleTestimonial from "./SingleTestimonial";
 
 type Testimonial = {

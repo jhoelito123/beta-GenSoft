@@ -1,4 +1,4 @@
-import SectionTitle from "../Common/SectionTitle";
+import SectionTitle from "../SectionTitle";
 import SingleBlog from "./SingleBlog";
 import { useFetchData } from "../../../../hooks/use-fetch-data";
 import { API_URL } from "../../../../config/api-config";

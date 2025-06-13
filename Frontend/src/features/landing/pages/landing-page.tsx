@@ -1,9 +1,9 @@
-import Footer from "../../components/ui/footer";
-import Blog from "./components/Blog";
-import Features from "./components/Features";
-import Hero from "./components/hero";
-import Pricing from "./components/Pricing";
-import Testimonials from "./components/Testimonials";
+import Footer from "../../../components/ui/footer";
+import Blog from "../components/Blog";
+import Features from "../components/Features";
+import Hero from "../components/hero";
+import Pricing from "../components/Pricing";
+import Testimonials from "../components/Testimonials";
 
 const MainLayout = () => { 
   return (
