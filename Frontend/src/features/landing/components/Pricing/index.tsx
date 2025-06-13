@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 import SectionTitle from "../Common/SectionTitle";
 import OfferList from "./OfferList";
@@ -26,8 +25,8 @@ const Pricing = () => {
               onClick={() => setIsMonthly(true)}
               className={`${
                 isMonthly
-                  ? "pointer-events-none text-primary"
-                  : "text-dark dark:text-white"
+                  ? "pointer-events-none text-primary "
+                  : "text-dark"
               } mr-4 cursor-pointer text-base font-semibold`}
             >
               Mensual
@@ -37,11 +36,11 @@ const Pricing = () => {
               className="flex cursor-pointer items-center"
             >
               <div className="relative">
-                <div className="h-5 w-14 rounded-full bg-[#1D2144] shadow-inner"></div>
+                <div className="h-5 w-14 rounded-full bg-blue-500 shadow-inner"></div>
                 <div
                   className={`${
                     isMonthly ? "" : "translate-x-full"
-                  } shadow-switch-1 absolute left-0 top-[-4px] flex h-7 w-7 items-center justify-center rounded-full bg-primary transition`}
+                  } shadow-switch-1 absolute left-0 top-[-4px] flex h-7 w-7 items-center justify-center rounded-full bg-blue transition`}
                 >
                   <span className="active h-4 w-4 rounded-full bg-white"></span>
                 </div>
@@ -51,7 +50,7 @@ const Pricing = () => {
               onClick={() => setIsMonthly(false)}
               className={`${
                 isMonthly
-                  ? "text-dark dark:text-white"
+                  ? "text-dark"
                   : "pointer-events-none text-primary"
               } ml-4 cursor-pointer text-base font-semibold`}
             >
@@ -62,40 +61,40 @@ const Pricing = () => {
 
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
           <PricingBox
-            packageName="Lite"
+            packageName=" Lite"
             price={isMonthly ? "40" : "120"}
-            duration={isMonthly ? "mo" : "yr"}
+            duration={isMonthly ? "mes" : "año"}
             subtitle="Antes que el dólar suba más"
           >
-            <OfferList text="Use with Unlimited" status="active" />
-            <OfferList text="Commercial Use" status="active" />
-            <OfferList text="Email Support" status="active" />
-            <OfferList text="Lifetime Access" status="inactive" />
-            <OfferList text="Free Lifetime Updates" status="inactive" />
+            <OfferList text="Uso ilimitado" status="active" />
+            <OfferList text="Uso comercial" status="active" />
+            <OfferList text="Email Soporte" status="active" />
+            <OfferList text="Siempre accesible" status="inactive" />
+            <OfferList text="Ver próximos cursos" status="inactive" />
           </PricingBox>
           <PricingBox
-            packageName="Basic"
+            packageName=" Basic"
             price={isMonthly ? "399" : "789"}
-            duration={isMonthly ? "mo" : "yr"}
+            duration={isMonthly ? "mes" : "año" }
             subtitle="Antes que el dólar suba más"
           >
-            <OfferList text="Use with Unlimited" status="active" />
-            <OfferList text="Commercial Use" status="active" />
-            <OfferList text="Email Support" status="active" />
-            <OfferList text="Lifetime Access" status="inactive" />
-            <OfferList text="Free Lifetime Updates" status="inactive" />
+            <OfferList text="Uso ilimitado" status="active" />
+            <OfferList text="Uso comercial" status="active" />
+            <OfferList text="Email Soporte" status="active" />
+            <OfferList text="Siempre accesible" status="inactive" />
+            <OfferList text="Ver próximos cursos" status="inactive" />
           </PricingBox>
           <PricingBox
             packageName="Plus"
             price={isMonthly ? "589" : "999"}
-            duration={isMonthly ? "mo" : "yr"}
+            duration={isMonthly ? "mes" : "año"}
             subtitle="Antes que el dólar suba más"
           >
-            <OfferList text="Use with Unlimited " status="active" />
-            <OfferList text="Commercial Use" status="active" />
-            <OfferList text="Email Support" status="active" />
-            <OfferList text="Lifetime Access" status="active" />
-            <OfferList text="Free Lifetime Updates" status="active" />
+            <OfferList text="Uso ilimitado " status="active" />
+            <OfferList text="Uso comercial" status="active" />
+            <OfferList text="Email Soporte" status="active" />
+            <OfferList text="Siempre accesible" status="active" />
+            <OfferList text="Ver próximos cursos" status="active" />
           </PricingBox>
         </div>
       </div>
