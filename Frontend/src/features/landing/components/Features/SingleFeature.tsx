@@ -1,4 +1,11 @@
-import { Feature } from "@/types/feature";
+import { JSX } from "react";
+
+type Feature = {
+  id: number;
+  icon: JSX.Element;
+  title: string;
+  paragraph: string;
+};
 
 const SingleFeature = ({ feature }: { feature: Feature }) => {
   const { icon, title, paragraph } = feature;

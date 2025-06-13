@@ -1,4 +1,4 @@
-import {Link} from "react-router";
+import { Button } from "../../../components";
 
 const Hero = () => {
   return (
@@ -14,7 +14,7 @@ const Hero = () => {
                 className="wow fadeInUp mx-auto text-center"
                 data-wow-delay=".2s"
               >
-                <h1 className="mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
+                <h1 className="mb-5 text-3xl font-bold leading-tight text-black sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
                   ¡Bienvenido a Pystart!
                 </h1>
                 <p className="mb-12 text-base !leading-relaxed text-body-color sm:text-lg md:text-xl">
@@ -23,12 +23,10 @@ const Hero = () => {
                   complejidad para todo tipo de estudiantes
                 </p>
                 <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-                  <Link
-                    to="https://github.com/jhoelito123/PyStart"
-                    className="inline-block rounded-sm bg-black px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-black/90 dark:bg-white/10 dark:text-white dark:hover:bg-white/5"
-                  >
-                    Estamos en GitHub
-                  </Link>
+                  <Button
+                    label="Estamos en GitHub"
+                    onClick={() => window.open("https://github.com/jhoelito123/PyStart", "_blank")}
+                  />
                 </div>
               </div>
             </div>

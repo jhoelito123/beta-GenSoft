@@ -1,4 +1,6 @@
 import { ReactElement } from "react";
+import { useFetchData } from "../../../../hooks/use-fetch-data";
+import { API_URL } from "../../../../config/api-config";
 
 type Feature = {
   id: number;
@@ -6,6 +8,19 @@ type Feature = {
   title: string;
   paragraph: string;
 };
+
+// function getModules (){
+//   const { data: modules } = useFetchData<
+//     { id_modulo: number; nombre_modulo: string }[]
+//   >(`${API_URL}/education/modulos`);
+//   const options = modules?.map((item) => ({
+//                       id: item.id_modulo,
+//                       nombre: item.nombre_modulo,
+//                     })) || []
+//                   ;
+//   return options;
+// }
+// console.log(getModules());
 
 const featuresData: Feature[] = [
   {
