@@ -139,9 +139,9 @@ const SignupPage = () => {
                   </div>
                 </form>
                 <p className="text-center text-base font-medium text-body-color">
-                  Already using Startup?{" "}
+                  ¿Ya tienes una cuenta? &emsp;
                   <Link to="/signin" className="text-primary hover:underline">
-                    Sign in
+                    Inicia sesión
                   </Link>
                 </p>
               </div>
