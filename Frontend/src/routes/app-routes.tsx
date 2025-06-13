@@ -10,6 +10,7 @@ import Ejecutor from '../TestExecute';
 import MainLayout from '../features/landing/pages/landing-page';
 import SigninPage from '../features/registrations/pages/sign-in';
 import SignupPage from '../features/registrations/pages/sign-up';
+import ShowSectionPage from '../features/courses/pages/show-section';
 
 export default function AppRoutes() {
   return (
@@ -36,7 +37,8 @@ export default function AppRoutes() {
             element={<RegisterSectionCoursePage />}
           />
           <Route path="/course" element={<CoursesPage />} />
-          <Route path="/show-course" element={<ShowCoursePage />} />
+          <Route path="/show-course/:id" element={<ShowCoursePage />} />
+          <Route path="/show-section" element={<ShowSectionPage />} />
           <Route path="/code-editor" element={<Ejecutor />} />
         </Route>
       </Routes>
