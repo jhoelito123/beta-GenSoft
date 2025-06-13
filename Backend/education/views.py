@@ -63,6 +63,13 @@ class CursoDetail(generics.ListAPIView):
     queryset = Curso.objects.all()
     serializer_class = CursoSerializer
 
+class CursosPorInstitucionView(generics.ListAPIView):
+    serializer_class = CursoSerializer
+
+    def get_queryset(self):
+        institucion_id = self.kwargs['institucion_id']
+        return Curso.objects.filter(institucion_id=institucion_id)
+    
 class CodeExecutorAPIView(APIView):
     def post(self, request, *args, **kwargs):
         input_serializer = CodeExecutionInputSerializer(data=request.data)
