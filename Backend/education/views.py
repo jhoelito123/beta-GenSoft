@@ -62,7 +62,7 @@ class CursoCreateView(generics.CreateAPIView):
 class CursoDetail(generics.ListAPIView):
     queryset = Curso.objects.all()
     serializer_class = CursoSerializer
-
+    
 class CodeExecutorAPIView(APIView):
     def post(self, request, *args, **kwargs):
         input_serializer = CodeExecutionInputSerializer(data=request.data)

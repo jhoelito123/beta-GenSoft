@@ -100,7 +100,7 @@ export default function FormEducationalInstitution() {
 
     setLoading(true);
     try {
-      await axios.post(`${API_URL}/education/instituciones/`, payload);
+      await axios.post(`${API_URL}/education/instituciones/create`, payload);
       alert('Institución registrada con éxito');
       reset();
     } catch (error: any) {
