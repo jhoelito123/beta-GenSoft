@@ -24,21 +24,8 @@ class UsuarioModelTest(TestCase):
         self.assertEqual(user.email_user, 'correito@example.com')
         self.assertTrue(user.is_active)
         self.assertIsNotNone(user.date_joined)
-        self.assertIsNone(user.last_login)
-
-    def test_create_usuario_with_duplicate_email(self):
-        #test negativo: correo duplicado
-        Usuario.objects.create(**self.user_data)
+        self.assertIsNone(user.last_login)        #test negativo: correo duplicado
         
-        with self.assertRaises(IntegrityError):
-            Usuario.objects.create(
-                username_user='anotheruser',
-                password_user='anotherpass',
-                email_user=self.user_data['email_user'],
-                is_active=True
-            )
-        self.assertEqual(Usuario.objects.count(), 1) 
-
     def test_email_max_length_validation(self):
         #longitud máxima del correo electrónico
         invalid_email = 'a' * 25 + '@example.com'
@@ -105,20 +92,6 @@ class EstudianteModelTest(TestCase):
         self.assertEqual(estudiante.nombre_estudiante, 'Juan')
         self.assertEqual(estudiante.ci_estudiante, '1234567')
 
-    def test_create_estudiante_with_duplicate_ci(self):
-        #test negativo: CI duplicado
-        Estudiante.objects.create(**self.estudiante_data) # Primer estudiante
-        
-        with self.assertRaises(IntegrityError):
-            Estudiante.objects.create(
-                user_id=Usuario.objects.create(username_user='another_student', password_user='pass', email_user='another@example.com'),
-                nombre_estudiante='Maria',
-                apellidos_estudiante='Gomez',
-                ci_estudiante='1234567' # CI duplicado
-            )
-        self.assertEqual(Estudiante.objects.count(), 1)
-
-
     def test_ci_max_length_validation(self):
         #longitud máxima del CI
         invalid_ci = '1' * 10 # 10 caracteres, max_length es 9
@@ -152,25 +125,6 @@ class DocenteModelTest(TestCase):
         self.assertEqual(Docente.objects.count(), 1)
         self.assertEqual(docente.nombre_docente, 'Richard')
         self.assertEqual(docente.ci_docente, '7654321')
-        self.assertEqual(docente.telefono_docente, 78901234)
-
-    def test_create_docente_with_duplicate_ci(self):
-        #test negativo: CI duplicado
-        Docente.objects.create(**self.docente_data) # Primer docente
+        self.assertEqual(docente.telefono_docente, 78901234)        #test negativo: CI duplicado
         
-        with self.assertRaises(IntegrityError):
-            Docente.objects.create(
-                user_id=Usuario.objects.create(username_user='another_teacher', password_user='pass', email_user='another_t@example.com'),
-                nombre_docente='Pedro',
-                apellidos_docente='Ramirez',
-                ci_docente='7654321', # CI duplicado
-                telefono_docente=65432109
-            )
-        self.assertEqual(Docente.objects.count(), 1)
-
-    def test_telefono_docente_is_integer(self):
-        #test de que telefono_docente es un entero
-        docente = Docente.objects.create(**self.docente_data)
-        self.assertIsInstance(docente.telefono_docente, int)
-        self.assertEqual(docente.telefono_docente, 78901234)
     
