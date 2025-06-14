@@ -71,6 +71,7 @@ class Curso(models.Model):
     id_curso = models.AutoField(primary_key=True)
     nombre_curso = models.CharField(max_length=100)
     profesor_curso = models.ForeignKey(Docente, on_delete=models.CASCADE)
+    institucion = models.ForeignKey('Institucion', on_delete=models.CASCADE, related_name='cursos')
     calificacion_curso = models.FloatField(default=0.0)
     duracion_curso = models.DurationField(default=timedelta(minutes=0))
     descripcion_curso = models.TextField()
