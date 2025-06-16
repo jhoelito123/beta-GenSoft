@@ -90,25 +90,40 @@ class CursoSerializer(serializers.ModelSerializer):
         model = Curso
         fields = "__all__"
 
+
 class SeccionesParaCursoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Seccion
-        fields = ['id_seccion', 'nombre_seccion', 'descripcion_seccion']
+        fields = ["id_seccion", "nombre_seccion", "descripcion_seccion"]
+
 
 class CursoDetalleSerializer(serializers.ModelSerializer):
-    idioma = serializers.CharField(source='idioma_curso.idioma', read_only=True)
-    dificultad = serializers.CharField(source='dificultad_curso.dificultad_curso', read_only=True)
-    modulo = serializers.CharField(source='modulo_curso.nombre_modulo', read_only=True)
-    profesor = serializers.CharField(source='profesor_curso.nombre_docente', read_only=True)
+    idioma = serializers.CharField(source="idioma_curso.idioma", read_only=True)
+    dificultad = serializers.CharField(
+        source="dificultad_curso.dificultad_curso", read_only=True
+    )
+    modulo = serializers.CharField(source="modulo_curso.nombre_modulo", read_only=True)
+    profesor = serializers.CharField(
+        source="profesor_curso.nombre_docente", read_only=True
+    )
     secciones = SeccionesParaCursoSerializer(many=True, read_only=True)
 
     class Meta:
         model = Curso
         fields = [
-            'id_curso', 'nombre_curso', 'descripcion_curso', 'fecha_inicio_curso',
-            'duracion_curso', 'portada_curso', 'idioma',
-            'dificultad', 'modulo', 'profesor', 'secciones'
+            "id_curso",
+            "nombre_curso",
+            "descripcion_curso",
+            "fecha_inicio_curso",
+            "duracion_curso",
+            "portada_curso",
+            "idioma",
+            "dificultad",
+            "modulo",
+            "profesor",
+            "secciones",
         ]
+
 
 class CodeExecutionInputSerializer(serializers.Serializer):
     code = serializers.CharField(
