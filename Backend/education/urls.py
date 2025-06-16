@@ -33,6 +33,6 @@ urlpatterns = [
     path("dificultad/", views.DificultadDetail.as_view(), name="dificults-list"),
     path("curso/", views.CursoDetail.as_view(), name="courses-list"),
     path("curso/create/", views.CursoCreateView.as_view(), name="course-create"),
-    # aqui haces de /curso/<id> para los detalles de curso por id
     path("execute-code/", views.CodeExecutorAPIView.as_view(), name="execute-code"),
+    path('cursos/<int:pk>/', views.CursoDetailView.as_view(), name='curso-detail'),
 ]

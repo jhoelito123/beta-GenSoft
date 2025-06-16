@@ -96,6 +96,9 @@ class CursoDetail(generics.ListAPIView):
     queryset = Curso.objects.all()
     serializer_class = CursoSerializer
 
+class CursoDetailView(generics.RetrieveAPIView):
+    queryset = Curso.objects.all()
+    serializer_class = CursoSerializer
 
 class CodeExecutorAPIView(APIView):
     def post(self, request, *args, **kwargs):
