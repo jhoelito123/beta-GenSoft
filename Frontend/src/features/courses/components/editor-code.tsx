@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import CodeEditor from './components/ui/code-editor';
+import CodeEditor from '../../../components/ui/code-editor';
+import { API_URL } from '../../../config/api-config';
 
 export default function Ejecutor({
   initialCode = '',
