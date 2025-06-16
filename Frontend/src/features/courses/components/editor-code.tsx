@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import CodeEditor from '../../../components/ui/code-editor';
 import { API_URL } from '../../../config/api-config';
+import axios from 'axios';
 
 export default function Ejecutor({
   initialCode = '',
@@ -16,49 +17,51 @@ export default function Ejecutor({
   };
 
   const handleExecuteCode = async () => {
-    setLoading(true);
-    setOutput('');
+  setLoading(true);
+  setOutput(''); // Limpia la salida al iniciar la ejecución
 
-    try {
-      const response = await fetch(
-        'http://127.0.0.1:8000/api/education/execute-code/',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ code, language: 'python' }),
-        },
-      );
+  try {
+    const response = await axios.post(`${API_URL}/education/execute-code/`, {
+      code,
+      language: 'python',
+    });
+    const data = response.data;
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        setOutput(
-          `Error del servidor: ${response.status} ${response.statusText}\n${JSON.stringify(
-            errorData,
-            null,
-            2,
-          )}`,
-        );
-        return;
-      }
-
-      const data = await response.json();
-      if (data.status === 'success') {
-        setOutput(data.output);
-      } else {
-        setOutput(`Estado: ${data.status.toUpperCase()}\n${data.output}`);
-      }
-    } catch (error) {
-      setOutput(
-        `Error al conectar con el servidor: ${
-          error instanceof Error ? error.message : String(error)
-        }.`,
-      );
-    } finally {
-      setLoading(false);
+    if (data.status === 'success') {
+      setOutput(data.output);
+    } else {
+      setOutput(`Estado: ${data.status.toUpperCase()}\n${data.output}`);
     }
-  };
+
+  } catch (error) {
+    console.error('Error al ejecutar código:', error);
+
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        setOutput(
+          `Error del servidor (${error.response.status}):\n${JSON.stringify(
+            error.response.data,
+            null,
+            2
+          )}`
+        );
+      } else if (error.request) {
+        setOutput('Error de conexión: No se recibió respuesta del servidor. Verifica tu conexión o la URL del backend.');
+      } else {
+        setOutput(`Error inesperado al preparar la petición: ${error.message}`);
+      }
+    } else {
+      setOutput(
+        `Error inesperado: ${
+          error instanceof Error ? error.message : String(error)
+        }.`
+      );
+    }
+
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div>
